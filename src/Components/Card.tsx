@@ -1,16 +1,19 @@
 import React from "react";
+import { Gudang } from "../Interface/Gudang";
 
-export interface CardProps {
-  barang: {
-    nama: string;
-    harga: number;
-    tersedia: boolean;
-    jenis: number;
-  }[];
-}
+const Card: React.FC<Gudang> = ({ barang }) => {
+  const renderList = (): JSX.Element[] => {
+    return barang.map((item, i) => {
+      return (
+        <li key={i}>
+          Barang : {item.nama}, Harga : {item.harga}, Tersedia :{" "}
+          {item.tersedia ? "Tersedia" : "Tidak Tersedia"}, Jenis : {item.jenis}
+        </li>
+      );
+    });
+  };
 
-const Card: React.FC<CardProps> = ( {barang} ) => {
-  return <div>Card</div>;
+  return <ul>{renderList()}</ul>;
 };
 
 export default Card;
