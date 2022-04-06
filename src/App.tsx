@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 import Card from "./Components/Card";
 import { Gudang } from "./Interface/Gudang";

@@ -9,7 +9,7 @@ export interface CardProps {
   }[];
 }
 
-const Card = (props: CardProps) => {
+const Card: React.FC<CardProps> = ( {barang} ) => {
   return <div>Card</div>;
 };
 
