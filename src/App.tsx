@@ -1,38 +1,50 @@
 import { useState } from "react";
-import "./App.css";
-import AddToList from "./Components/AddToList";
-import Card from "./Components/Card";
-import ClassComponent from "./Components/ClassComponent";
-import FunctionalComponent from "./Components/FunctionalComponent";
-import { Gudang } from "./Interface/Gudang";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Employee from "./pages/Employee/Employee";
+import Navbar from "./components/Navbar/Navbar";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import { Box, Container, Grid, Paper, Toolbar } from "@mui/material";
 
 function App() {
-  const [barang, setBarang] = useState<Gudang["barang"]>([
-    {
-      nama: "Apel",
-      harga: 25000,
-      tersedia: true,
-      jenis: 3,
-    },
-    {
-      nama: "Kardus",
-      harga: 15000,
-      tersedia: false,
-      jenis: 2,
-    },
-  ]);
+  const [open, setOpen] = useState(true);
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
 
   return (
-    <div className="App">
-      {/* <h1>Gudang</h1>
-      <AddToList barang={barang} setBarang={setBarang}/>
-      <Card barang={barang} /> */}
-      {/* <ClassComponent namaHalaman="Halaman 1" title="Title : Class Component"/>
-      <FunctionalComponent title="This Has a child">
-        Ini Children
-      </FunctionalComponent> */}
-      <FunctionalComponent title="Title : Functional Component"/>
-    </div>
+    <>
+      <Box sx={{ display: "flex" }}>
+        <Navbar open={open} toggleDrawer={toggleDrawer} />
+        <Sidebar open={open} toggleDrawer={toggleDrawer} />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={8} lg={9}>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<Dashboard />}></Route>
+                    <Route path="/employee" element={<Employee />}></Route>
+                  </Routes>
+                </BrowserRouter>
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
+      </Box>
+    </>
   );
 }
 
