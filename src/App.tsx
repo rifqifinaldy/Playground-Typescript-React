@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import AddToList from "./Components/AddToList";
 import Card from "./Components/Card";
+import ClassComponent from "./Components/ClassComponent";
 import { Gudang } from "./Interface/Gudang";
 
 function App() {
@@ -22,9 +23,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Gudang</h1>
+      {/* <h1>Gudang</h1>
       <AddToList barang={barang} setBarang={setBarang}/>
-      <Card barang={barang} />
+      <Card barang={barang} /> */}
+      <ClassComponent namaHalaman="Halaman 1" title="Title : Class Component"/>
     </div>
   );
 }
