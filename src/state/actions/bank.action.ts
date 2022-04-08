@@ -1,4 +1,4 @@
-import { ActionType } from "../actions-types";
+import { ActionType } from "../actions-types/bank.types";
 
 interface DepositAction {
   type: ActionType.DEPOSIT;

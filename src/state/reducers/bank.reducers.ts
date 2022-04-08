@@ -1,5 +1,5 @@
-import { Action } from "../actions";
-import { ActionType } from "../actions-types";
+import { Action } from "../actions/bank.action";
+import { ActionType } from "../actions-types/bank.types";
 
 const initialState = 0;
 

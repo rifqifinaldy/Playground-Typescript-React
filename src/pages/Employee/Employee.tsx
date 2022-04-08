@@ -29,7 +29,7 @@ const Employee = () => {
             indicatorColor="secondary"
             variant="fullWidth"
           >
-            <Tab label="Create New" {...a11yProps(0)} />
+            <Tab label="Create" {...a11yProps(0)} />
             <Tab label="Employee Data" {...a11yProps(1)} />
           </Tabs>
         </Box>

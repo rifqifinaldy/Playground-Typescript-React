@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import {FC} from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import { bindActionCreators } from 'redux';
-import { actionCreators, State } from '../../state';
+import { bankCreators, State } from '../../state';
 
 interface Props {
     count : number;
@@ -13,7 +13,7 @@ const DashboardChildren:FC<Props> = ({count, increment}) => {
   
   const dispatch = useDispatch();
 
-  const { depositMoney, withdrawMoney, bankrupt } = bindActionCreators(actionCreators, dispatch)
+  const { depositMoney, withdrawMoney, bankrupt } = bindActionCreators(bankCreators, dispatch)
   const amount = useSelector((state: State) => state.bank)
 
   return (
