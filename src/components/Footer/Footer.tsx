@@ -1,5 +1,4 @@
 import { Link, Typography } from "@mui/material";
-import React from "react";
 
 const Footer = (props:any) => {
   return (
@@ -11,7 +10,7 @@ const Footer = (props:any) => {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Rifqi Finaldy
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}

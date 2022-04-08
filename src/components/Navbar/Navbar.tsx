@@ -1,40 +1,14 @@
 import { FC } from "react";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Badge } from "@mui/material";
+import {AppBar} from './NavbarStyle';
+import { Navigation } from "../../utilities/interface";
 
-interface NavbarProps {
-  open: boolean;
-  toggleDrawer: () => void;
-}
-
-const drawerWidth: number = 240;
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<NavbarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Navbar: FC<NavbarProps> = ({ open, toggleDrawer }) => {
+const Navbar: FC<Navigation> = ({ open, toggleDrawer }) => {
   return (
-    <AppBar position="absolute" open={open} toggleDrawer={toggleDrawer}>
+    <AppBar position="absolute" open={open}>
       <Toolbar
         sx={{
           pr: "24px", // keep right padding when drawer closed
