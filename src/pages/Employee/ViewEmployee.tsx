@@ -1,66 +1,52 @@
 import { useState } from "react";
-import RFTable from "../../components/Table/Table";
+import { DataGrid, GridRowsProp, GridColDef, GridApi } from "@mui/x-data-grid";
+import { Button } from "@mui/material";
 
 const ViewEmployee = () => {
-  interface Column {
-    id: "name" | "code" | "population" | "size" | "density";
-    label: string;
-    minWidth?: number;
-    align?: "right";
-    format?: (value: number) => string;
-  }
+  console.log(process.env.REACT_APP_API_URL)
+  const [data, setData] = useState<GridRowsProp>([
+    {
+      id: 1,
+      code: "EMP-2015-HR-01",
+      role: "HR",
+      name: "R Finaldy",
+    },
+    {
+      id: 2,
+      code: "EMP-2017-EN-02",
+      role: "Engineer",
+      name: "F Rifqi",
+    },
+  ]);
 
-  const columns: Column[] = [
-    { id: "name", label: "Name", minWidth: 170 },
-    { id: "code", label: "ISO\u00a0Code", minWidth: 100 },
+  const [selected, setSelected] = useState({})
+
+  const columns: GridColDef[] = [
+    { field: "code", headerName: "Employee Code", width: 250 },
+    { field: "role", headerName: "HR", width: 250 },
+    { field: "name", headerName: "Full Name", width: 250 },
     {
-      id: "population",
-      label: "Population",
-      minWidth: 170,
-      align: "right",
-      format: (value: number) => value.toLocaleString("en-US"),
-    },
-    {
-      id: "size",
-      label: "Size\u00a0(km\u00b2)",
-      minWidth: 170,
-      align: "right",
-      format: (value: number) => value.toLocaleString("en-US"),
-    },
-    {
-      id: "density",
-      label: "Density",
-      minWidth: 170,
-      align: "right",
-      format: (value: number) => value.toFixed(2),
+      field: "action",
+      headerName: "Action",
+      renderCell: (params) => {
+        const onClick = () => {
+          setSelected(params.row);
+
+        };
+        return <Button onClick={onClick}>Edit</Button>;
+      },
     },
   ];
 
-  interface Data {
-    name: string;
-    code: string;
-    population: number;
-    size: number;
-    density: number;
-  }
-
-  const rows: Data = [
-      {
-          name : "Rifqi",
-          code : "123",
-          population: 123,
-          size: 2,
-          densitiy : 2
-      }
-    ];
-
-  //   console.log(rows);
-
   return (
-    <>
-      <h1>HALO</h1>
-      <RFTable columns={columns} rows={rows} />
-    </>
+    <div style={{ height: 300, width: "100%" }}>
+      <DataGrid
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        rows={data}
+        columns={columns}
+      />
+    </div>
   );
 };
 

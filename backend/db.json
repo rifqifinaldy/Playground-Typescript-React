@@ -1,0 +1,24 @@
+{
+  "employee": [
+    {
+      "id": 1,
+      "employee_code" : "EMP-EN-01",
+      "npwp": "1222932132",
+      "full_name": "Rifqi Finaldy",
+      "address": "Antapani, Bandung",
+      "role": "Frontend Developer",
+      "mobile_no": "+62-8571097993",
+      "age": 25
+    },
+    {
+      "id": 2,
+      "employee_code" : "EMP-EN-02",
+      "npwp": "0912391283A2183B",
+      "full_name": "Finaldy Rifqi",
+      "address": "Arcamanik, Bandung",
+      "role": "Backend Developer",
+      "mobile_no": "+62-8571097992",
+      "age": 24
+    }
+  ]
+}
