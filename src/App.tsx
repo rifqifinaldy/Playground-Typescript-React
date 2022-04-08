@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Employee from "./pages/Employee/Employee";
+import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import Dashboard from "./pages/Dashboard/Dashboard";
 import { Box, Container, Grid, Toolbar } from "@mui/material";
 import AppRoute from "./AppRoute";
 
@@ -32,12 +30,8 @@ function App() {
             }}
           >
             <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={8} lg={9}>
-                    <AppRoute />
-                </Grid>
-              </Grid>
+            <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
+              <AppRoute />
             </Container>
           </Box>
         </Box>

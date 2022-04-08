@@ -5,10 +5,10 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {Drawer} from './SidebarStyle';
-import { Navigation } from "../../utilities/interface";
+import { NavigationProps } from "../../utilities/interface";
 import SidebarNavMain from "./List";
 
-const Sidebar:FC<Navigation> = ({open, toggleDrawer}) => {
+const Sidebar:FC<NavigationProps> = ({open, toggleDrawer}) => {
   return (
     <Drawer variant="permanent" open={open}>
       <Toolbar

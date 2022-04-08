@@ -4,9 +4,9 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import {AppBar} from './NavbarStyle';
-import { Navigation } from "../../utilities/interface";
+import { NavigationProps } from "../../utilities/interface";
 
-const Navbar: FC<Navigation> = ({ open, toggleDrawer }) => {
+const Navbar: FC<NavigationProps> = ({ open, toggleDrawer }) => {
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar

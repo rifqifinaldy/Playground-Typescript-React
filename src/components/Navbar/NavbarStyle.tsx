@@ -1,11 +1,11 @@
 import { styled } from '@mui/material/styles';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import MuiAppBar from '@mui/material/AppBar';
 import { drawerWidth } from "../../utilities/utilities";
-import { Navigation } from '../../utilities/interface';
+import { NavigationProps } from '../../utilities/interface';
 
 export const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
-  })<Navigation>(({ theme, open }) => ({
+  })<NavigationProps>(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
