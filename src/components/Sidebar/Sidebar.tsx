@@ -1,12 +1,11 @@
 import {FC} from "react";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {Drawer} from './SidebarStyle';
 import { NavigationProps } from "../../utilities/interface";
-import SidebarNavMain from "./List";
+import {SidebarNavMain} from "./List";
 
 const Sidebar:FC<NavigationProps> = ({open, toggleDrawer}) => {
   return (
@@ -24,9 +23,7 @@ const Sidebar:FC<NavigationProps> = ({open, toggleDrawer}) => {
         </IconButton>
       </Toolbar>
       <Divider />
-      <List component="nav">
-        <SidebarNavMain />
-      </List>
+      <SidebarNavMain />
     </Drawer>
   );
 };
