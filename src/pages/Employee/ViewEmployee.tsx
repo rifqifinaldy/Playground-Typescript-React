@@ -4,34 +4,37 @@ import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { employeeCreators, State } from "../../state";
+import { ErrorOverlay, LoadingOverlay, NoDataOverlay } from "../../components/DataGrid/DataGridOverlay";
+
 
 const ViewEmployee = () => {
   const dispatch = useDispatch();
 
   // Redux State
-  const {getEmployee} = bindActionCreators(employeeCreators, dispatch);
+  const { getEmployee } = bindActionCreators(employeeCreators, dispatch);
   const employee = useSelector((state: State) => state.employee);
 
   const rerender = useCallback(() => {
     dispatch(getEmployee);
-  }, [dispatch])
+  }, [dispatch]);
 
   useEffect(() => {
     //   Get Data On Mount
-    rerender()
-  },[rerender]);
-  
+    rerender();
+  }, [rerender]);
+
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 150 },
-    { field: "employee_code", headerName: "Employee Code", width: 250 },
+    { field: "employee_code", headerName: "Employee Code", width: 150 },
+    { field: "full_name", headerName: "Full Name", width: 150 },
+    { field: "age", headerName: "Age", width: 100 },
+    { field: "address", headerName: "Address", width: 250 },
     { field: "role", headerName: "HR", width: 250 },
-    { field: "full_name", headerName: "Full Name", width: 250 },
     {
       field: "action",
       headerName: "Action",
       renderCell: (params) => {
         const onClick = () => {
-          console.log(params.row)
+          console.log(params.row);
         };
         return <Button onClick={onClick}>Edit</Button>;
       },
@@ -40,16 +43,15 @@ const ViewEmployee = () => {
 
   return (
     <div style={{ height: 300, width: "100%" }}>
-      {employee.length !== 0 ? (
-        <DataGrid
+      <DataGrid
           pageSize={5}
           rowsPerPageOptions={[5]}
-          rows={employee}
+          components={{
+            NoRowsOverlay: employee.loading ? LoadingOverlay : employee.error ? ErrorOverlay : employee.data.length === 0 ? NoDataOverlay : LoadingOverlay,
+          }}
+          rows={employee.data}
           columns={columns}
         />
-      ) : (
-        <h1>Loading</h1>
-      )}
     </div>
   );
 };

@@ -5,21 +5,33 @@ import axios from "axios";
 import { API_URL } from "../../utilities/utilities";
 
 export const getEmployee = () => async (dispatch: Dispatch<EmployeeAction>) => {
-//   dispatch({
-//     type: EmployeeType.GET,
-//     payload: ['loading']
-//   });
+  dispatch({
+    type: EmployeeType.GET,
+    payload: {
+      loading: true,
+      data: [],
+      error: false
+    }
+  });
   try {
     const { data } = await axios.get(API_URL + "employee");
     const response = data;
     dispatch({
       type: EmployeeType.GET,
-      payload: response,
+      payload: {
+        loading: false,
+        data: response,
+        error: false,
+      },
     });
   } catch (error) {
     dispatch({
       type: EmployeeType.GET,
-      payload: [],
+      payload: {
+        loading: false,
+        data: [],
+        error: true,
+      },
     });
   }
 };

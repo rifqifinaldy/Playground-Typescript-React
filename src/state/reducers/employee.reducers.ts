@@ -1,12 +1,26 @@
 import { EmployeeAction } from "../actions/employee.action";
 import { EmployeeType } from "../actions-types/employee.types";
 
-const initialState:[] = []
+interface response {
+  loading: boolean,
+  data: [],
+  error: string | boolean
+}
 
-const employeeReducers = (state: [] = initialState, action: EmployeeAction) => {
+const initialState:response = {
+  loading: true,
+  data: [],
+  error: false,
+}
+
+const employeeReducers = (state = initialState, action: EmployeeAction) => {
   switch (action.type) {
     case EmployeeType.GET:
-      return state = action.payload
+      return {
+        loading: action.payload.loading,
+        data: action.payload.data,
+        error: action.payload.error
+      }
     default:
       return state;
   }

@@ -1,8 +1,19 @@
 import { EmployeeType } from "../actions-types/employee.types";
 
+interface response {
+  loading: boolean,
+  data: [],
+  error: string | boolean
+}
+
 interface GetAction {
   type: EmployeeType.GET;
-  payload: [];
+  payload: response;
+}
+
+interface PostAction {
+  type: EmployeeType.POST;
+  payload: response;
 }
 
 // interface UpdateAction {
