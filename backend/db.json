@@ -2,7 +2,7 @@
   "employee": [
     {
       "id": 1,
-      "employee_code" : "EMP-EN-01",
+      "employee_code": "EMP-EN-01",
       "npwp": "1222932132",
       "full_name": "Rifqi Finaldy",
       "address": "Antapani, Bandung",
@@ -12,13 +12,209 @@
     },
     {
       "id": 2,
-      "employee_code" : "EMP-EN-02",
+      "employee_code": "EMP-EN-02",
       "npwp": "0912391283A2183B",
       "full_name": "Finaldy Rifqi",
       "address": "Arcamanik, Bandung",
       "role": "Backend Developer",
       "mobile_no": "+62-8571097992",
       "age": 24
+    },
+    {
+      "full_name": "Violet",
+      "employee_code": "EMP-HR-001",
+      "address": "Kuningan, South Jakarta",
+      "mobile_no": "08291002910",
+      "age": "24",
+      "npwp": "778411124795",
+      "role": "Staff HR",
+      "id": 3
+    },
+    {
+      "full_name": "Erlangga",
+      "employee_code": "EMP-JA-001",
+      "address": "Palasari, Sumedang",
+      "mobile_no": "085574113287",
+      "age": "29",
+      "npwp": "5598444015",
+      "role": "Janitor",
+      "id": 4
+    },
+    {
+      "full_name": "Navieska",
+      "employee_code": "EMP-DS-001",
+      "address": "Antapani, Bandung",
+      "mobile_no": "085748451098",
+      "age": "24",
+      "npwp": "55684112314",
+      "role": "UI Designer",
+      "id": 5
+    },
+    {
+      "full_name": "Budi Bola",
+      "employee_code": "EMP-HR-002",
+      "address": "Baros, Cimahi",
+      "mobile_no": "085975715420",
+      "age": "26",
+      "npwp": "5568441",
+      "role": "HR",
+      "id": 6
+    },
+    {
+      "full_name": "Teresya",
+      "employee_code": "EMP-EN-003",
+      "address": "Cihampelas, Bandung",
+      "mobile_no": "085654781254",
+      "age": "21",
+      "npwp": "N0029412233",
+      "role": "Mobile Developer",
+      "id": 7
+    },
+    {
+      "full_name": "65465",
+      "employee_code": "21312",
+      "address": "213123",
+      "mobile_no": "213",
+      "age": "24",
+      "npwp": "123213",
+      "role": "123213213",
+      "id": 8
+    },
+    {
+      "full_name": "ASG",
+      "employee_code": "564wq6eqw",
+      "address": "123123",
+      "mobile_no": "12321312",
+      "age": 22,
+      "npwp": "12321",
+      "role": "123213",
+      "id": 9
+    },
+    {
+      "full_name": "asd56465w4qe",
+      "employee_code": "21837213780",
+      "address": "askjdohqweou21",
+      "mobile_no": "2103712803",
+      "age": 22,
+      "npwp": "2018371236280",
+      "role": "213213124123",
+      "id": 10
+    },
+    {
+      "full_name": "asd56465w4qe",
+      "employee_code": "21837213780",
+      "address": "askjdohqweou21",
+      "mobile_no": "2103712803",
+      "age": 22,
+      "npwp": "2018371236280",
+      "role": "213213124123",
+      "id": 11
+    },
+    {
+      "full_name": "213123",
+      "employee_code": "21312",
+      "address": "123213",
+      "mobile_no": "12321213",
+      "age": 22,
+      "npwp": "213213",
+      "role": "213123123",
+      "id": 12
+    },
+    {
+      "full_name": "213213",
+      "employee_code": "213",
+      "address": "123123",
+      "mobile_no": "213",
+      "age": 22,
+      "npwp": "21312",
+      "role": "123213",
+      "id": 13
+    },
+    {
+      "full_name": "213213",
+      "employee_code": "213",
+      "address": "123123",
+      "mobile_no": "213",
+      "age": 22,
+      "npwp": "21312",
+      "role": "123213",
+      "id": 14
+    },
+    {
+      "full_name": "213213",
+      "employee_code": "213",
+      "address": "123123",
+      "mobile_no": "213",
+      "age": 22,
+      "npwp": "21312",
+      "role": "123213",
+      "id": 15
+    },
+    {
+      "full_name": "Erlangga",
+      "employee_code": "123213",
+      "address": "213",
+      "mobile_no": "12312",
+      "age": 22,
+      "npwp": "213213",
+      "role": "213213",
+      "id": 16
+    },
+    {
+      "id": 17
+    },
+    {
+      "id": 18
+    },
+    {
+      "full_name": "Navieska Teresya",
+      "employee_code": "EMP-02-EN-21",
+      "address": "654564",
+      "mobile_no": "654dsa564",
+      "age": "25",
+      "npwp": "123213",
+      "role": "123214123",
+      "id": 19
+    },
+    {
+      "full_name": "Navieska Teresya",
+      "employee_code": "EMP-02-EN-21",
+      "address": "654564",
+      "mobile_no": "654dsa564",
+      "age": "25",
+      "npwp": "123213",
+      "role": "123214123",
+      "id": 20
+    },
+    {
+      "full_name": "213",
+      "employee_code": "123",
+      "address": "123",
+      "mobile_no": "123",
+      "age": 22,
+      "npwp": "21321",
+      "role": "213123",
+      "id": 21
+    },
+    {
+      "full_name": "213123",
+      "employee_code": "213",
+      "address": "123",
+      "mobile_no": "123",
+      "age": 22,
+      "npwp": "213213",
+      "role": "213213",
+      "id": 22
+    },
+    {
+      "full_name": "Erlangga",
+      "employee_code": "123123",
+      "address": "123123",
+      "mobile_no": "123123123",
+      "age": 22,
+      "npwp": "321321",
+      "role": "3213",
+      "id": 23
     }
   ]
 }

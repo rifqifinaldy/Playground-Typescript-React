@@ -2,6 +2,7 @@ import { EmployeeType } from "../actions-types/employee.types";
 
 interface response {
   loading: boolean,
+  success: string | boolean,
   data: [],
   error: string | boolean
 }
@@ -16,13 +17,17 @@ interface PostAction {
   payload: response;
 }
 
-// interface UpdateAction {
-//   type: EmployeeType.UPDATE;
-//   payload: {}[];
-// }
+interface UpdateAction {
+  type: EmployeeType.UPDATE;
+  payload: {}[];
+}
 
-// interface DeleteAction {
-//   type: EmployeeType.DELETE;
-// }
+interface DeleteAction {
+  type: EmployeeType.DELETE;
+}
 
-export type EmployeeAction = GetAction;
+interface ResetAction {
+  type: EmployeeType.RESET;
+}
+
+export type EmployeeAction = GetAction | PostAction | UpdateAction | DeleteAction | ResetAction;

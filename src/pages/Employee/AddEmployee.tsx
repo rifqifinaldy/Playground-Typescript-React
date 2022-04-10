@@ -6,10 +6,19 @@ import {
   Paper,
   TextField,
   Typography,
+  Zoom,
 } from "@mui/material";
-import { useState, FormEvent } from "react";
+import { useEffect, useState, FormEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { employeeCreators, State } from "../../state";
 
 const AddEmployee = () => {
+  const dispatch = useDispatch();
+  const { postEmployee } = bindActionCreators(employeeCreators, dispatch);
+  const employee = useSelector((state: State) => state.employee);
+
+  // Initial Form State
   const [body, setBody] = useState({
     full_name: "",
     employee_code: "",
@@ -19,11 +28,42 @@ const AddEmployee = () => {
     npwp: "",
     role: "",
   });
+  const [alert, setAlert] = useState({
+    open: false,
+    color: "success",
+    text: "Loading",
+  });
+
+  useEffect(() => {
+    console.log("onMount", employee);
+    if (employee.loading === false) {
+      if (employee.success) {
+        setAlert({
+          open: true,
+          color: "success",
+          text: "Data Has Been Saved",
+        });
+      } else {
+        setAlert({
+          open: true,
+          color: "error",
+          text: "An Error Has Occured",
+        });
+      }
+      setTimeout(() => {
+        setAlert({
+          open: false,
+          color: "info",
+          text: "Closing",
+        });
+      }, 5000);
+    }
+  }, [employee]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submitting..");
-    console.log("SendData", body);
+    postEmployee(body);
+    console.log("After Submit", employee);
   };
 
   const handleChange = (
@@ -59,8 +99,8 @@ const AddEmployee = () => {
                 shrink: true,
               }}
               inputProps={{
-                  max: 100,
-                  min: 10,
+                max: 100,
+                min: 10,
               }}
               onChange={(e) => handleChange(e)}
             />
@@ -176,9 +216,25 @@ const AddEmployee = () => {
               >
                 Submit
               </Button>
-              <Alert severity="success">
-                This is a success alert — check it out!
-              </Alert>
+              <Button
+                fullWidth
+                onClick={() =>
+                  setAlert({
+                    open: true,
+                    text: "TEST MESSAGE",
+                    color: "success",
+                  })
+                }
+              >
+                TEST
+              </Button>
+              <Zoom in={alert.open}>
+                <Alert
+                  severity={alert.color === "success" ? "success" : "error"}
+                >
+                  {alert.text}
+                </Alert>
+              </Zoom>
             </Grid>
           </Grid>
         </Grid>

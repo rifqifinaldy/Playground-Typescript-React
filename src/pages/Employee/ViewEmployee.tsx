@@ -11,16 +11,21 @@ const ViewEmployee = () => {
   const dispatch = useDispatch();
 
   // Redux State
-  const { getEmployee } = bindActionCreators(employeeCreators, dispatch);
+  const { getEmployee, resetEmployee } = bindActionCreators(employeeCreators, dispatch);
   const employee = useSelector((state: State) => state.employee);
 
   const rerender = useCallback(() => {
     dispatch(getEmployee);
   }, [dispatch]);
 
+  
   useEffect(() => {
     //   Get Data On Mount
     rerender();
+    return () => {
+      console.log("RESET")
+      dispatch(resetEmployee)
+    }
   }, [rerender]);
 
   const columns: GridColDef[] = [
@@ -42,7 +47,7 @@ const ViewEmployee = () => {
   ];
 
   return (
-    <div style={{ height: 300, width: "100%" }}>
+    <div style={{ height: 380, width: "100%" }}>
       <DataGrid
           pageSize={5}
           rowsPerPageOptions={[5]}

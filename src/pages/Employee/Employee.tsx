@@ -12,9 +12,9 @@ import ViewEmployee from "./ViewEmployee";
 import AddEmployee from "./AddEmployee";
 
 const Employee = () => {
-  const [value, setValue] = useState(0);
+  const [tab, setTab] = useState(0);
   const handleChange = (e: SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setTab(newValue);
   };
   return (
     <Paper sx={{ p : 1 }}>
@@ -22,7 +22,7 @@ const Employee = () => {
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
-            value={value}
+            value={tab}
             onChange={handleChange}
             aria-label="basic tabs example"
             textColor="secondary"
@@ -33,10 +33,10 @@ const Employee = () => {
             <Tab label="Employee Data" {...a11yProps(1)} />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0}>
+        <TabPanel value={tab} index={0}>
           <AddEmployee />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={tab} index={1}>
           <ViewEmployee />
         </TabPanel>
       </Box>
