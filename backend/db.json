@@ -275,6 +275,26 @@
       "npwp": "21321",
       "role": "213213",
       "id": 29
+    },
+    {
+      "full_name": "213213",
+      "employee_code": "213123",
+      "address": "123123",
+      "mobile_no": "123123",
+      "age": "22123123",
+      "npwp": "123123",
+      "role": "1231231231",
+      "id": 30
+    },
+    {
+      "full_name": "",
+      "employee_code": "12321",
+      "address": "",
+      "mobile_no": "21321",
+      "age": 22,
+      "npwp": "",
+      "role": "",
+      "id": 31
     }
   ]
 }

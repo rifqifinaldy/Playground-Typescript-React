@@ -4,7 +4,9 @@ import {
   Speed,
   Festival,
   MonetizationOn,
-  AddTask
+  AddTask,
+  AccountBalance,
+  Engineering
 } from "@mui/icons-material";
 
 // DEKLARASI DATA DUMMY UNTUK SIDEBAR
@@ -15,16 +17,20 @@ export const icons = {
   Festival,
   People,
   MonetizationOn,
-  AddTask
+  AddTask,
+  AccountBalance,
+  Engineering
 };
 
 export interface NavigationSubItem {
+  id: number;
   text:string;
   icon: keyof typeof icons;
   target: string;
 }
 
 export interface NavigationItem {
+  id: number
   text: string;
   icon: keyof typeof icons;
   target: string;
@@ -34,6 +40,7 @@ export interface NavigationItem {
 
 export const sidebarData: NavigationItem[] = [
   {
+    id: 0,
     text: "Dashboard",
     icon: "Dashboard",
     target: "/",
@@ -41,6 +48,7 @@ export const sidebarData: NavigationItem[] = [
     items: [],
   },
   {
+    id: 1,
     text: "Performance",
     icon: "Speed",
     target: "/performance",
@@ -48,6 +56,7 @@ export const sidebarData: NavigationItem[] = [
     items: [],
   },
   {
+    id: 2,
     text: "Event",
     icon: "Festival",
     target: "/festival",
@@ -55,6 +64,7 @@ export const sidebarData: NavigationItem[] = [
     items: [],
   },
   {
+    id: 3,
     text: "Task",
     icon: "AddTask",
     target: "/task",
@@ -62,18 +72,28 @@ export const sidebarData: NavigationItem[] = [
     items: [],
   },
   {
+    id: 4,
     text: "HR",
     icon: "People",
     target: "/employee",
     master: 1,
     items: [
       {
+        id: 4.1,
         text: "Employee",
-        icon: "People",
+        icon: "Engineering",
         target: "/hr/employee",
       },
     ],
   },
+  {
+    id: 5,
+    text: "Bank",
+    icon: "AccountBalance",
+    target: "/bank",
+    master: 1,
+    items: []
+  }
 ];
 
 // CHECK ITEM KOSONG APA GAK

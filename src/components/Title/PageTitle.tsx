@@ -2,7 +2,7 @@ import { Divider, Typography } from "@mui/material";
 import {FC} from "react";
 
 interface PageTitleProps {
-    title : string,
+    title : string | JSX.Element,
     icon?: any
 }
 
