@@ -36,7 +36,7 @@ const AddEmployee = () => {
 
   useEffect(() => {
     console.log("onMount", employee);
-    if (employee.loading === false) {
+    if (employee.data === true) {
       if (employee.success) {
         setAlert({
           open: true,
@@ -215,18 +215,6 @@ const AddEmployee = () => {
                 variant="contained"
               >
                 Submit
-              </Button>
-              <Button
-                fullWidth
-                onClick={() =>
-                  setAlert({
-                    open: true,
-                    text: "TEST MESSAGE",
-                    color: "success",
-                  })
-                }
-              >
-                TEST
               </Button>
               <Zoom in={alert.open}>
                 <Alert

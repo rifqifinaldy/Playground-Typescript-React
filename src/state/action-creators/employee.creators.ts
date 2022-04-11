@@ -65,7 +65,7 @@ export const postEmployee = (sendData: {}) => {
         payload: {
           success: true,
           loading: false,
-          data: [],
+          data: true,
           error: false,
         },
       });
@@ -75,7 +75,7 @@ export const postEmployee = (sendData: {}) => {
         payload: {
           success: false,
           loading: false,
-          data: [],
+          data: true,
           error: true,
         },
       });

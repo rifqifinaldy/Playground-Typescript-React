@@ -52,9 +52,9 @@ const ViewEmployee = () => {
           pageSize={5}
           rowsPerPageOptions={[5]}
           components={{
-            NoRowsOverlay: employee.loading ? LoadingOverlay : employee.error ? ErrorOverlay : employee.data.length === 0 ? NoDataOverlay : LoadingOverlay,
+            NoRowsOverlay: employee.loading ? LoadingOverlay : employee.error ? ErrorOverlay : employee.data instanceof Array && employee.data.length === 0 ? NoDataOverlay : LoadingOverlay,
           }}
-          rows={employee.data}
+          rows={employee.data instanceof Array ? employee.data : []}
           columns={columns}
         />
     </div>
