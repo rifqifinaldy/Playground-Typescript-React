@@ -36,7 +36,7 @@ const AddEmployee = () => {
 
   useEffect(() => {
     console.log("onMount", employee);
-    if (employee.loading === false) {
+    if (employee.data === true) {
       if (employee.success) {
         setAlert({
           open: true,
