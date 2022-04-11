@@ -215,6 +215,66 @@
       "npwp": "321321",
       "role": "3213",
       "id": 23
+    },
+    {
+      "full_name": "Erlangga",
+      "employee_code": "123123",
+      "address": "12321",
+      "mobile_no": "21321",
+      "age": "23",
+      "npwp": "321312",
+      "role": "Staff HR",
+      "id": 24
+    },
+    {
+      "full_name": "Hello",
+      "employee_code": "545647123",
+      "address": "213213",
+      "mobile_no": "123213",
+      "age": 22,
+      "npwp": "123213",
+      "role": "213213",
+      "id": 25
+    },
+    {
+      "full_name": "213213",
+      "employee_code": "21321",
+      "address": "21321",
+      "mobile_no": "321321",
+      "age": "223213",
+      "npwp": "123123",
+      "role": "123213",
+      "id": 26
+    },
+    {
+      "full_name": "3213123",
+      "employee_code": "12312",
+      "address": "321312",
+      "mobile_no": "123123",
+      "age": "22123",
+      "npwp": "123123213",
+      "role": "123123123",
+      "id": 27
+    },
+    {
+      "full_name": "3123213",
+      "employee_code": "12312",
+      "address": "3123",
+      "mobile_no": "123213",
+      "age": 22,
+      "npwp": "12312321",
+      "role": "3213123",
+      "id": 28
+    },
+    {
+      "full_name": "213213",
+      "employee_code": "12312",
+      "address": "3213",
+      "mobile_no": "21321",
+      "age": 22,
+      "npwp": "21321",
+      "role": "213213",
+      "id": 29
     }
   ]
 }
