@@ -4,7 +4,7 @@ import { EmployeeType } from "../actions-types/employee.types";
 interface response {
   loading: boolean;
   success: string | boolean;
-  data: [];
+  data: [] | boolean;
   error: string | boolean;
 }
 
