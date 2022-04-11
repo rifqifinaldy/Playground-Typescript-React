@@ -4,28 +4,33 @@ import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { employeeCreators, State } from "../../state";
-import { ErrorOverlay, LoadingOverlay, NoDataOverlay } from "../../components/DataGrid/DataGridOverlay";
-
+import {
+  ErrorOverlay,
+  LoadingOverlay,
+  NoDataOverlay,
+} from "../../components/DataGrid/DataGridOverlay";
 
 const ViewEmployee = () => {
   const dispatch = useDispatch();
 
   // Redux State
-  const { getEmployee, resetEmployee } = bindActionCreators(employeeCreators, dispatch);
+  const { getEmployee, resetEmployee } = bindActionCreators(
+    employeeCreators,
+    dispatch
+  );
   const employee = useSelector((state: State) => state.employee);
 
   const rerender = useCallback(() => {
     dispatch(getEmployee);
   }, [dispatch]);
 
-  
   useEffect(() => {
     //   Get Data On Mount
     rerender();
     return () => {
-      console.log("RESET")
-      dispatch(resetEmployee)
-    }
+      console.log("RESET");
+      dispatch(resetEmployee);
+    };
   }, [rerender]);
 
   const columns: GridColDef[] = [
@@ -49,14 +54,20 @@ const ViewEmployee = () => {
   return (
     <div style={{ height: 380, width: "100%" }}>
       <DataGrid
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          components={{
-            NoRowsOverlay: employee.loading ? LoadingOverlay : employee.error ? ErrorOverlay : employee.data instanceof Array && employee.data.length === 0 ? NoDataOverlay : LoadingOverlay,
-          }}
-          rows={employee.data instanceof Array ? employee.data : []}
-          columns={columns}
-        />
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        components={{
+          NoRowsOverlay: employee.loading
+            ? LoadingOverlay
+            : employee.error
+            ? ErrorOverlay
+            : employee.data instanceof Array && employee.data.length === 0
+            ? NoDataOverlay
+            : LoadingOverlay,
+        }}
+        rows={employee.data instanceof Array ? employee.data : []}
+        columns={columns}
+      />
     </div>
   );
 };
