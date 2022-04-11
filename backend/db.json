@@ -285,6 +285,16 @@
       "npwp": "123123",
       "role": "1231231231",
       "id": 30
+    },
+    {
+      "full_name": "",
+      "employee_code": "12321",
+      "address": "",
+      "mobile_no": "21321",
+      "age": 22,
+      "npwp": "",
+      "role": "",
+      "id": 31
     }
   ]
 }

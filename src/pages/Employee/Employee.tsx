@@ -10,6 +10,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import PageTitle from "../../components/Title/PageTitle";
 import ViewEmployee from "./ViewEmployee";
 import AddEmployee from "./AddEmployee";
+import {PageName} from "../../components/Title/page.config";
 
 const Employee = () => {
   const [tab, setTab] = useState(0);
@@ -18,7 +19,7 @@ const Employee = () => {
   };
   return (
     <Paper sx={{ p : 1 }}>
-      <PageTitle title="Employee" icon={<PeopleIcon />}/>
+      <PageTitle title={<PageName />} icon={<PeopleIcon />}/>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs

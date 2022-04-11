@@ -1,9 +1,12 @@
 import { useState } from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { Box, Container, Grid, Toolbar } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import AppRoute from "./AppRoute";
+import theme from "./style/theme";
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -12,7 +15,8 @@ function App() {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
         <Box sx={{ display: "flex" }}>
           <Navbar open={open} toggleDrawer={toggleDrawer} />
@@ -20,23 +24,19 @@ function App() {
           <Box
             component="main"
             sx={{
-              backgroundColor: (theme) =>
-                theme.palette.mode === "light"
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
               flexGrow: 1,
               height: "100vh",
               overflow: "auto",
             }}
           >
             <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
+            <Box sx={{ p: 1 }}>
               <AppRoute />
-            </Container>
+            </Box>
           </Box>
         </Box>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 }
 

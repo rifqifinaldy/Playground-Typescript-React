@@ -1,12 +1,31 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import {AppBar} from './NavbarStyle';
+import { AppBar } from "./NavbarStyle";
 import { NavigationProps } from "../../utilities/interface";
+import { ListItemIcon, Menu, MenuItem, MenuList } from "@mui/material";
+
+import {
+  AccountCircle,
+  Menu as MenuIcon,
+  ManageAccounts,
+  LogoutRounded,
+  Camera,
+} from "@mui/icons-material";
+import {PageName} from "../Title/page.config";
 
 const Navbar: FC<NavigationProps> = ({ open, toggleDrawer }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar
@@ -20,11 +39,11 @@ const Navbar: FC<NavigationProps> = ({ open, toggleDrawer }) => {
           aria-label="open drawer"
           onClick={toggleDrawer}
           sx={{
-            marginRight: '36px',
-            ...(open && { display: 'none' }),
+            marginRight: "36px",
+            ...(open && { display: "none" }),
           }}
         >
-          <MenuIcon />
+          <MenuIcon color="inherit" />
         </IconButton>
         <Typography
           component="h1"
@@ -33,11 +52,52 @@ const Navbar: FC<NavigationProps> = ({ open, toggleDrawer }) => {
           noWrap
           sx={{ flexGrow: 1 }}
         >
-          Dashboard
+          <PageName />
         </Typography>
         <IconButton color="inherit">
-          
+          <Camera />
         </IconButton>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <Menu
+          sx={{ mt: "45px" }}
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuList>
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <ManageAccounts fontSize="small" />
+              </ListItemIcon>
+              Account Settings
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <LogoutRounded fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </Toolbar>
     </AppBar>
   );

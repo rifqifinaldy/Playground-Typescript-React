@@ -201,29 +201,22 @@ const AddEmployee = () => {
               onChange={(e) => handleChange(e)}
             />
           </Grid>
-          <Grid container justifyContent="center" alignItems="center">
-            <Grid item md={12}>
-              <Divider>
-                <small>Register This Employee</small>
-              </Divider>
-            </Grid>
-            <Grid item md={6}>
-              <Button
-                type="submit"
-                fullWidth
-                color="primary"
-                variant="contained"
-              >
-                Submit
-              </Button>
-              <Zoom in={alert.open}>
-                <Alert
-                  severity={alert.color === "success" ? "success" : "error"}
-                >
-                  {alert.text}
-                </Alert>
-              </Zoom>
-            </Grid>
+        </Grid>
+        <Grid container justifyContent="center" alignItems="center">
+          <Grid item md={12}>
+            <Divider>
+              <small>Register This Employee</small>
+            </Divider>
+          </Grid>
+          <Grid item md={3}>
+            <Button type="submit" fullWidth color="primary" variant="contained">
+              Submit
+            </Button>
+            <Zoom in={alert.open}>
+              <Alert severity={alert.color === "success" ? "success" : "error"}>
+                {alert.text}
+              </Alert>
+            </Zoom>
           </Grid>
         </Grid>
       </form>
