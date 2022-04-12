@@ -1,7 +1,7 @@
 {
   "employee": [
     {
-      "full_name": "Erlangga",
+      "full_name": "Erlangga ASD 12",
       "employee_code": "213213",
       "address": "12321",
       "mobile_no": "3213",
@@ -11,14 +11,94 @@
       "id": 1
     },
     {
-      "full_name": "123213",
-      "employee_code": "21321",
-      "address": "2132",
-      "mobile_no": "321312312",
-      "age": 22,
-      "npwp": "13213",
-      "role": "3213123213",
+      "full_name": "65465",
+      "employee_code": "12321",
+      "address": "321",
+      "mobile_no": "312313",
+      "age": "2212312",
+      "npwp": "3213123123",
+      "role": "123123213123",
       "id": 2
+    },
+    {
+      "full_name": "65465",
+      "employee_code": "12321123",
+      "address": "32112321",
+      "mobile_no": "312313213",
+      "age": "2212311232",
+      "npwp": "3213123123123",
+      "role": "123123213123123",
+      "id": 3
+    },
+    {
+      "id": 4,
+      "full_name": "Violet Orlandi",
+      "employee_code": "123123",
+      "address": "12312",
+      "mobile_no": "3123",
+      "age": 22,
+      "npwp": "123123",
+      "role": "213213123"
+    },
+    {
+      "id": 5,
+      "full_name": "New Employee 2",
+      "employee_code": "554144123",
+      "address": "Antapani, Bandung",
+      "mobile_no": "08291002910",
+      "age": "236",
+      "npwp": "5514441234",
+      "role": "SS"
+    },
+    {
+      "id": 6,
+      "full_name": "Violet213",
+      "employee_code": "213",
+      "address": "123",
+      "mobile_no": "123",
+      "age": 22,
+      "npwp": "213123",
+      "role": "21312"
+    },
+    {
+      "id": 7,
+      "full_name": "213123",
+      "employee_code": "12312",
+      "address": "12",
+      "mobile_no": "sadsad",
+      "age": 22,
+      "npwp": "sadqwe",
+      "role": "213123"
+    },
+    {
+      "id": 8,
+      "full_name": "RE",
+      "employee_code": "213213",
+      "address": "12321123",
+      "mobile_no": "213213",
+      "age": 22,
+      "npwp": "213123",
+      "role": "213213"
+    },
+    {
+      "id": 9,
+      "full_name": "Erlangga",
+      "employee_code": "12321",
+      "address": "312312",
+      "mobile_no": "12312",
+      "age": 22,
+      "npwp": "213123",
+      "role": "123123"
+    },
+    {
+      "id": 10,
+      "full_name": "KOKOARO",
+      "employee_code": "OODSAdqwe",
+      "address": "12321",
+      "mobile_no": "213123",
+      "age": 22,
+      "npwp": "12312",
+      "role": "3123123"
     }
   ]
 }

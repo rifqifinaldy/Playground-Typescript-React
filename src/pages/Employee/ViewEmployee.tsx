@@ -1,4 +1,11 @@
-import { useEffect, useCallback, useMemo, useState } from "react";
+import {
+  useEffect,
+  useCallback,
+  useMemo,
+  useState,
+  SyntheticEvent,
+  FC,
+} from "react";
 import {
   GridActionsCellItem,
   GridRowId,
@@ -19,16 +26,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Alert, Button, Grid, Paper, Zoom } from "@mui/material";
 import { Modal } from "../../components/Modal/Modal";
 
-const ViewEmployee = () => {
+const ViewEmployee: FC<{
+  changeFormStatus: (e: SyntheticEvent, newValue: number, editData: {}) => void;
+}> = ({ changeFormStatus }) => {
   const dispatch = useDispatch();
   const [pageSize, setPageSize] = useState<number>(7);
   const [modal, setModal] = useState<boolean>(false);
   const [dataID, setDataID] = useState<number | string | null>(null);
-  const [alert, setAlert] = useState({
-    open: false,
-    color: "success",
-    text: "Loading",
-  });
 
   // Redux State
   const { getEmployee, resetEmployee, deleteEmployee } = bindActionCreators(
@@ -48,15 +52,13 @@ const ViewEmployee = () => {
       setModal(false);
       rerender();
     },
-    [deleteEmployee, rerender]
+    [deleteEmployee, rerender, dataID]
   );
 
-  const handleEdit = useCallback(
-    (row: GridRowId) => () => {
-      console.log("Edit toggle", row);
-    },
-    []
-  );
+  const handleEdit = (e: SyntheticEvent, row:GridRowId) => {
+    console.log("Edit Toggle", row)
+    changeFormStatus(e, 0, row)
+  }
 
   useEffect(() => {
     //   Get Data On Mount
@@ -94,13 +96,13 @@ const ViewEmployee = () => {
           <GridActionsCellItem
             icon={<EditIcon color="info" />}
             label="Edit"
-            onClick={handleEdit(params.row)}
+            onClick={(e)=>handleEdit(e, params.row)}
             showInMenu
           />,
         ],
       },
     ],
-    [handleDelete, handleEdit]
+    [handleEdit]
   );
 
   const openModal = (id: GridRowId) => {
@@ -108,7 +110,7 @@ const ViewEmployee = () => {
     setModal(true);
     setDataID(id);
   };
-  
+
   return (
     <Paper style={{ height: 380, width: "100%" }}>
       <Modal
@@ -135,7 +137,7 @@ const ViewEmployee = () => {
       <RFDataGrid
         pageSize={pageSize}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        rowsPerPageOptions={[5, 10, 20]}
+        rowsPerPageOptions={[7, 14, 21]}
         components={{
           NoRowsOverlay: employee.loading
             ? LoadingOverlay
@@ -149,15 +151,6 @@ const ViewEmployee = () => {
         rows={employee.data instanceof Array ? employee.data : []}
         columns={columns}
       />
-      <Grid container justifyContent="center" alignItems="center">
-          <Grid item md={6}>
-            <Zoom in={alert.open}>
-              <Alert severity={alert.color === "success" ? "success" : "error"}>
-                {alert.text}
-              </Alert>
-            </Zoom>
-          </Grid>
-        </Grid>
     </Paper>
   );
 };

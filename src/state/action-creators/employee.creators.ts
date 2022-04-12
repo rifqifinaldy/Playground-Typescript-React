@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { EmployeeAction } from "../actions/employee.action";
 import axios from "axios";
 import { API_URL } from "../../utilities/utilities";
+import { EmployeeBody } from "../../pages/Employee/AddEmployee";
 
 // GET METHOD
 export const getEmployee = () => {
@@ -12,6 +13,7 @@ export const getEmployee = () => {
       payload: {
         success: false,
         loading: true,
+        sendData : {},
         data: [],
         error: false,
       },
@@ -24,6 +26,7 @@ export const getEmployee = () => {
         payload: {
           success: true,
           loading: false,
+          sendData: {},
           data: response,
           error: false,
         },
@@ -34,6 +37,7 @@ export const getEmployee = () => {
         payload: {
           success: false,
           loading: false,
+          sendData: {},
           data: [],
           error: true,
         },
@@ -51,6 +55,7 @@ export const postEmployee = (sendData: {}) => {
       payload: {
         success: false,
         loading: true,
+        sendData: {},
         data: [],
         error: false,
       },
@@ -65,6 +70,7 @@ export const postEmployee = (sendData: {}) => {
         payload: {
           success: true,
           loading: false,
+          sendData: response,
           data: true,
           error: false,
         },
@@ -75,6 +81,7 @@ export const postEmployee = (sendData: {}) => {
         payload: {
           success: false,
           loading: false,
+          sendData: {},
           data: true,
           error: true,
         },
@@ -92,6 +99,7 @@ export const resetEmployee =
       payload: {
         success: false,
         loading: true,
+        sendData: {},
         data: [],
         error: false,
       },
@@ -106,6 +114,7 @@ export const resetEmployee =
         payload: {
           success: false,
           loading: true,
+          sendData: {},
           data: [],
           error: false,
         },
@@ -120,6 +129,7 @@ export const resetEmployee =
           payload: {
             success: true,
             loading: false,
+            sendData: {},
             data: true,
             error: false,
           },
@@ -130,6 +140,50 @@ export const resetEmployee =
           payload: {
             success: false,
             loading: false,
+            sendData: {},
+            data: true,
+            error: true,
+          },
+        });
+      }
+    };
+  };
+
+  export const updateEmployee = (sendData:EmployeeBody) => {
+    return async (dispatch: Dispatch<EmployeeAction>) => {
+      console.log("POSTING...");
+      dispatch({
+        type: EmployeeType.UPDATE,
+        payload: {
+          success: false,
+          loading: true,
+          sendData: false,
+          data: [],
+          error: false,
+        },
+      });
+      try {
+        console.log("Editing", sendData);
+        const { data } = await axios.put(API_URL + "employee/" + sendData.id, sendData);
+        const response = data;
+        console.log(response);
+        dispatch({
+          type: EmployeeType.UPDATE,
+          payload: {
+            success: true,
+            loading: false,
+            sendData: response,
+            data: true,
+            error: false,
+          },
+        });
+      } catch (error) {
+        dispatch({
+          type: EmployeeType.UPDATE,
+          payload: {
+            success: false,
+            loading: false,
+            sendData: false,
             data: true,
             error: true,
           },

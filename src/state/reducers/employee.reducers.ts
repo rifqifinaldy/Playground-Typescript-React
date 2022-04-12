@@ -6,6 +6,7 @@ interface response {
   success: string | boolean;
   data: [] | boolean;
   error: string | boolean;
+  sendData: {};
 }
 
 const initialState: response = {
@@ -13,6 +14,7 @@ const initialState: response = {
   success: false,
   data: [],
   error: false,
+  sendData: {},
 };
 
 const employeeReducers = (state = initialState, action: EmployeeAction) => {
@@ -24,6 +26,7 @@ const employeeReducers = (state = initialState, action: EmployeeAction) => {
         success: action.payload.success,
         data: action.payload.data,
         error: action.payload.error,
+        sendData: action.payload.sendData,
       };
     case EmployeeType.POST:
       return {
@@ -32,6 +35,7 @@ const employeeReducers = (state = initialState, action: EmployeeAction) => {
         success: action.payload.success,
         data: action.payload.data,
         error: action.payload.error,
+        sendData: action.payload.sendData,
       };
     case EmployeeType.DELETE:
       return {
@@ -40,6 +44,17 @@ const employeeReducers = (state = initialState, action: EmployeeAction) => {
         success: action.payload.success,
         data: action.payload.data,
         error: action.payload.error,
+        sendData: action.payload.sendData,
+      };
+
+    case EmployeeType.UPDATE:
+      return {
+        ...state,
+        loading: action.payload.loading,
+        success: action.payload.success,
+        data: action.payload.data,
+        error: action.payload.error,
+        sendData: action.payload.sendData,
       };
     case EmployeeType.RESET:
       return {

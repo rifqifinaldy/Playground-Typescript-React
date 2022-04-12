@@ -8,10 +8,21 @@ import AddEmployee from "./AddEmployee";
 import { PageName } from "../../components/Title/page.config";
 
 const Employee = () => {
-  const [tab, setTab] = useState(0);
-  const handleChange = (e: SyntheticEvent, newValue: number) => {
+  const [tab, setTab] = useState<number>(0);
+  const [edit, setEdit] = useState<boolean>(false);
+  const [editData, setEditData] = useState({});
+  const changeTab = (e: SyntheticEvent, newValue: number) => {
     setTab(newValue);
+    setEdit(false);
   };
+
+  const changeFormStatus = (e: SyntheticEvent, newValue: number, editData:{}) => {
+    setTab(newValue);
+    setEdit(true);
+    setEditData(editData)
+    console.log("Triggered", newValue);
+  };
+
   return (
     <>
       <Box
@@ -24,12 +35,12 @@ const Employee = () => {
         <AppBar color="primary" position="static">
           <Tabs
             value={tab}
-            onChange={handleChange}
+            onChange={changeTab}
             aria-label="basic tabs example"
             textColor="inherit"
             indicatorColor="secondary"
           >
-            <Tab label="Create" {...a11yProps(0)} />
+            <Tab label={edit ? "Edit" : "Create"} {...a11yProps(0)} />
             <Tab label="Employee Data" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
@@ -38,10 +49,10 @@ const Employee = () => {
         <PageTitle title={<PageName />} icon={<PeopleIcon />} />
         <Box sx={{ width: "100%" }}>
           <TabPanel value={tab} index={0}>
-            <AddEmployee />
+            <AddEmployee edit={edit} editData={editData} changeFormStatus={changeFormStatus}/>
           </TabPanel>
           <TabPanel value={tab} index={1}>
-            <ViewEmployee />
+            <ViewEmployee changeFormStatus={changeFormStatus} />
           </TabPanel>
         </Box>
       </Paper>

@@ -5,24 +5,38 @@ import {
   Grid,
   Paper,
   TextField,
-  Typography,
   Zoom,
 } from "@mui/material";
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState, FormEvent, FC, SyntheticEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
-import { PageName } from "../../components/Title/page.config";
-import PageTitle from "../../components/Title/PageTitle";
 import { employeeCreators, State } from "../../state";
-import PeopleIcon from "@mui/icons-material/People";
 
-const AddEmployee = () => {
+interface EditForm {
+  edit: boolean;
+  editData: {};
+  changeFormStatus: (e: SyntheticEvent, newValue: number, editData: {}) => void
+}
+
+export interface EmployeeBody {
+  id: number | null;
+  full_name: string;
+  employee_code: string;
+  address: string;
+  mobile_no: string;
+  age: number;
+  npwp: string;
+  role: string;
+}
+
+const AddEmployee: FC<EditForm> = ({ edit, editData, changeFormStatus }) => {
   const dispatch = useDispatch();
-  const { postEmployee } = bindActionCreators(employeeCreators, dispatch);
+  const { postEmployee, updateEmployee } = bindActionCreators(employeeCreators, dispatch);
   const employee = useSelector((state: State) => state.employee);
 
   // Initial Form State
-  const [body, setBody] = useState({
+  const [body, setBody] = useState<EmployeeBody>({
+    id : null,
     full_name: "",
     employee_code: "",
     address: "",
@@ -31,6 +45,7 @@ const AddEmployee = () => {
     npwp: "",
     role: "",
   });
+
   const [alert, setAlert] = useState({
     open: false,
     color: "success",
@@ -41,6 +56,7 @@ const AddEmployee = () => {
     console.log("onMount", employee);
     if (employee.data === true) {
       if (employee.success) {
+        setBody(employee.sendData as EmployeeBody);
         setAlert({
           open: true,
           color: "success",
@@ -63,10 +79,23 @@ const AddEmployee = () => {
     }
   }, [employee]);
 
+  useEffect(() => {
+    if (edit) {
+      console.log("Currently on Edit Mode", body);
+      setBody(editData as EmployeeBody);
+    }
+  }, [editData]);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     postEmployee(body);
-    console.log("After Submit", employee);
+    changeFormStatus(e, 0, body);
+  };
+
+  const handleEdit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Sending EDIT Data", body);
+    updateEmployee(body);
   };
 
   const handleChange = (
@@ -80,7 +109,7 @@ const AddEmployee = () => {
 
   return (
     <Paper>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={(e) => (edit ? handleEdit(e) : handleSubmit(e))}>
         <Grid px={1} py={1} container spacing={2}>
           <Grid item md={6}>
             <TextField
