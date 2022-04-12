@@ -16,36 +16,39 @@ import {
 import { RFDataGrid } from "../../components/DataGrid/table.style";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Paper } from "@mui/material";
+import { Alert, Button, Grid, Paper, Zoom } from "@mui/material";
+import { Modal } from "../../components/Modal/Modal";
 
 const ViewEmployee = () => {
   const dispatch = useDispatch();
   const [pageSize, setPageSize] = useState<number>(7);
+  const [modal, setModal] = useState<boolean>(false);
+  const [dataID, setDataID] = useState<number | string | null>(null);
+  const [alert, setAlert] = useState({
+    open: false,
+    color: "success",
+    text: "Loading",
+  });
 
   // Redux State
-  const { getEmployee, resetEmployee } = bindActionCreators(
+  const { getEmployee, resetEmployee, deleteEmployee } = bindActionCreators(
     employeeCreators,
     dispatch
   );
   const employee = useSelector((state: State) => state.employee);
   const rerender = useCallback(() => {
+    console.log("GET EMPLOYEE");
     dispatch(getEmployee);
-  }, [dispatch]);
-
-  useEffect(() => {
-    //   Get Data On Mount
-    rerender();
-    return () => {
-      console.log("RESET");
-      dispatch(resetEmployee);
-    };
-  }, [rerender]);
+  }, [dispatch, getEmployee]);
 
   const handleDelete = useCallback(
-    (id: GridRowId) => () => {
-      console.log("Delete", id);
+    () => () => {
+      console.log("Handling Delete ID :", dataID);
+      deleteEmployee(dataID);
+      setModal(false);
+      rerender();
     },
-    []
+    [deleteEmployee, rerender]
   );
 
   const handleEdit = useCallback(
@@ -54,6 +57,15 @@ const ViewEmployee = () => {
     },
     []
   );
+
+  useEffect(() => {
+    //   Get Data On Mount
+    dispatch(getEmployee);
+    return () => {
+      console.log("Cleaning Up");
+      dispatch(resetEmployee);
+    };
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -76,7 +88,7 @@ const ViewEmployee = () => {
           <GridActionsCellItem
             icon={<DeleteIcon color="error" />}
             label="Delete"
-            onClick={handleDelete(params.id)}
+            onClick={() => openModal(params.id)}
             showInMenu
           />,
           <GridActionsCellItem
@@ -91,8 +103,35 @@ const ViewEmployee = () => {
     [handleDelete, handleEdit]
   );
 
+  const openModal = (id: GridRowId) => {
+    console.log("OPEN MODAL", id);
+    setModal(true);
+    setDataID(id);
+  };
+  
   return (
     <Paper style={{ height: 380, width: "100%" }}>
+      <Modal
+        modal={modal}
+        title="Confirm Delete"
+        text="You are going to delete this data"
+        action={
+          <>
+            <Button color="info" autoFocus onClick={() => setModal(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={handleDelete()}
+              autoFocus
+            >
+              Confirm
+            </Button>
+          </>
+        }
+      />
+
       <RFDataGrid
         pageSize={pageSize}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
@@ -110,6 +149,15 @@ const ViewEmployee = () => {
         rows={employee.data instanceof Array ? employee.data : []}
         columns={columns}
       />
+      <Grid container justifyContent="center" alignItems="center">
+          <Grid item md={6}>
+            <Zoom in={alert.open}>
+              <Alert severity={alert.color === "success" ? "success" : "error"}>
+                {alert.text}
+              </Alert>
+            </Zoom>
+          </Grid>
+        </Grid>
     </Paper>
   );
 };

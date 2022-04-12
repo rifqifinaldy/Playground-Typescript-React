@@ -97,3 +97,43 @@ export const resetEmployee =
       },
     });
   };
+
+  export const deleteEmployee = (id: string | number | null) => {
+    return async (dispatch: Dispatch<EmployeeAction>) => {
+      console.log("Deleting...");
+      dispatch({
+        type: EmployeeType.DELETE,
+        payload: {
+          success: false,
+          loading: true,
+          data: [],
+          error: false,
+        },
+      });
+      try {
+        console.log("Sending..", id);
+        const { data } = await axios.delete(API_URL + "employee/" + id);
+        const response = data;
+        console.log(response);
+        dispatch({
+          type: EmployeeType.DELETE,
+          payload: {
+            success: true,
+            loading: false,
+            data: true,
+            error: false,
+          },
+        });
+      } catch (error) {
+        dispatch({
+          type: EmployeeType.DELETE,
+          payload: {
+            success: false,
+            loading: false,
+            data: true,
+            error: true,
+          },
+        });
+      }
+    };
+  };

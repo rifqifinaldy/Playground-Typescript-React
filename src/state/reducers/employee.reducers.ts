@@ -33,10 +33,18 @@ const employeeReducers = (state = initialState, action: EmployeeAction) => {
         data: action.payload.data,
         error: action.payload.error,
       };
+    case EmployeeType.DELETE:
+      return {
+        ...state,
+        loading: action.payload.loading,
+        success: action.payload.success,
+        data: action.payload.data,
+        error: action.payload.error,
+      };
     case EmployeeType.RESET:
       return {
         ...initialState,
-      }
+      };
     default:
       return state;
   }

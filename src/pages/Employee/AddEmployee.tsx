@@ -199,6 +199,7 @@ const AddEmployee = () => {
             />
           </Grid>
         </Grid>
+        {/* BUTTON WRAPPER */}
         <Grid container justifyContent="center" alignItems="center">
           <Grid item md={12}>
             <Divider>
@@ -206,9 +207,20 @@ const AddEmployee = () => {
             </Divider>
           </Grid>
           <Grid item md={3}>
-            <Button type="submit" fullWidth color="primary" variant="contained">
+            <Button
+              disabled={alert.open}
+              type="submit"
+              fullWidth
+              color="primary"
+              variant="contained"
+            >
               Submit
             </Button>
+          </Grid>
+        </Grid>
+        {/* RESPONSE WRAPPER */}
+        <Grid container justifyContent="center" alignItems="center">
+          <Grid item md={6}>
             <Zoom in={alert.open}>
               <Alert severity={alert.color === "success" ? "success" : "error"}>
                 {alert.text}

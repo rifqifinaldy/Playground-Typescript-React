@@ -14,7 +14,7 @@ export const SidebarMenu = styled(List)({
   // selected and (selected + hover) states
   "&& .Mui-selected, && .Mui-selected:hover": {
     backgroundColor: theme.palette.primary.main,
-    borderRight: "8px solid" + theme.palette.success.main,
+    borderRight: "8px solid" + theme.palette.info.main,
     "&, & .MuiListItemIcon-root": {
       color: "#fefefe",
     },

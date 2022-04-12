@@ -24,6 +24,7 @@ interface UpdateAction {
 
 interface DeleteAction {
   type: EmployeeType.DELETE;
+  payload: response;
 }
 
 interface ResetAction {
