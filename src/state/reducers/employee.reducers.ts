@@ -1,62 +1,39 @@
-import { EmployeeAction } from "../actions/employee.action";
-import { EmployeeType } from "../actions-types/employee.types";
-
-interface response {
-  loading: boolean;
-  success: string | boolean;
-  data: [] | boolean;
-  error: string | boolean;
-  sendData: {};
-}
+import { ResponsesAction } from "../actions/responses.action";
+import { Method, response, responses } from "../actions-types/responses.types";
 
 const initialState: response = {
   loading: true,
-  success: false,
-  data: [],
-  error: false,
-  sendData: {},
+  responses: {} as responses,
 };
 
-const employeeReducers = (state = initialState, action: EmployeeAction) => {
+const employeeReducers = (state = initialState, action: ResponsesAction) => {
   switch (action.type) {
-    case EmployeeType.GET:
+    case Method.GET:
       return {
         ...state,
         loading: action.payload.loading,
-        success: action.payload.success,
-        data: action.payload.data,
-        error: action.payload.error,
-        sendData: action.payload.sendData,
+        responses: action.payload.responses,
       };
-    case EmployeeType.POST:
+    case Method.POST:
       return {
         ...state,
         loading: action.payload.loading,
-        success: action.payload.success,
-        data: action.payload.data,
-        error: action.payload.error,
-        sendData: action.payload.sendData,
+        responses: action.payload.responses,
       };
-    case EmployeeType.DELETE:
+    case Method.DELETE:
       return {
         ...state,
         loading: action.payload.loading,
-        success: action.payload.success,
-        data: action.payload.data,
-        error: action.payload.error,
-        sendData: action.payload.sendData,
+        responses: action.payload.responses,
       };
 
-    case EmployeeType.UPDATE:
+    case Method.UPDATE:
       return {
         ...state,
         loading: action.payload.loading,
-        success: action.payload.success,
-        data: action.payload.data,
-        error: action.payload.error,
-        sendData: action.payload.sendData,
+        responses: action.payload.responses,
       };
-    case EmployeeType.RESET:
+    case Method.RESET:
       return {
         ...initialState,
       };

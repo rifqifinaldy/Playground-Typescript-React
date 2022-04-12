@@ -1,45 +1,58 @@
-import { EmployeeType } from "../actions-types/employee.types";
 import { Dispatch } from "redux";
-import { EmployeeAction } from "../actions/employee.action";
 import axios from "axios";
 import { API_URL } from "../../utilities/utilities";
 import { EmployeeBody } from "../../pages/Employee/AddEmployee";
+import { ResponsesAction } from "../actions/responses.action";
+import {
+  Method,
+  StatusCode,
+  StatusMessage,
+} from "../actions-types/responses.types";
 
 // GET METHOD
 export const getEmployee = () => {
-  return async (dispatch: Dispatch<EmployeeAction>) => {
+  return async (dispatch: Dispatch<ResponsesAction>) => {
+    console.log("MASUK DISPATCH GET")
     dispatch({
-      type: EmployeeType.GET,
+      type: Method.GET,
       payload: {
-        success: false,
         loading: true,
-        sendData : {},
-        data: [],
-        error: false,
+        responses: {
+          method: Method.GET,
+          data: [],
+          status: 0,
+          message: "Loading",
+        },
       },
     });
     try {
+      console.log("REQUEST")
       const { data } = await axios.get(API_URL + "employee");
       const response = data;
+      console.log(response)
       dispatch({
-        type: EmployeeType.GET,
+        type: Method.GET,
         payload: {
-          success: true,
           loading: false,
-          sendData: {},
-          data: response,
-          error: false,
+          responses: {
+            method: Method.GET,
+            data: response,
+            status: StatusCode.GET,
+            message: StatusMessage.GET,
+          },
         },
       });
     } catch (error) {
       dispatch({
-        type: EmployeeType.GET,
+        type: Method.GET,
         payload: {
-          success: false,
           loading: false,
-          sendData: {},
-          data: [],
-          error: true,
+          responses: {
+            method: Method.GET,
+            data: [],
+            status: StatusCode.CLIENT_ERROR,
+            message: StatusMessage.CLIENT_ERROR,
+          },
         },
       });
     }
@@ -48,16 +61,18 @@ export const getEmployee = () => {
 
 // POST METHOD
 export const postEmployee = (sendData: {}) => {
-  return async (dispatch: Dispatch<EmployeeAction>) => {
+  return async (dispatch: Dispatch<ResponsesAction>) => {
     console.log("POSTING...");
     dispatch({
-      type: EmployeeType.POST,
+      type: Method.POST,
       payload: {
-        success: false,
         loading: true,
-        sendData: {},
-        data: [],
-        error: false,
+        responses: {
+          method: Method.POST,
+          data: [],
+          status: 0,
+          message: "Loading",
+        },
       },
     });
     try {
@@ -66,24 +81,28 @@ export const postEmployee = (sendData: {}) => {
       const response = data;
       console.log(response);
       dispatch({
-        type: EmployeeType.POST,
+        type: Method.POST,
         payload: {
-          success: true,
           loading: false,
-          sendData: response,
-          data: true,
-          error: false,
+          responses: {
+            method: Method.POST,
+            data: response,
+            status: StatusCode.UPDATE,
+            message: StatusMessage.POST,
+          },
         },
       });
     } catch (error) {
       dispatch({
-        type: EmployeeType.POST,
+        type: Method.POST,
         payload: {
-          success: false,
           loading: false,
-          sendData: {},
-          data: true,
-          error: true,
+          responses: {
+            method: Method.POST,
+            data: [],
+            status: StatusCode.CLIENT_ERROR,
+            message: StatusMessage.CLIENT_ERROR,
+          },
         },
       });
     }
@@ -92,102 +111,110 @@ export const postEmployee = (sendData: {}) => {
 
 // RESET
 export const resetEmployee =
-  () => async (dispatch: Dispatch<EmployeeAction>) => {
-    console.log("COMPONENT LEAVE & CANCEL ALL REQUEST")
+  () => async (dispatch: Dispatch<ResponsesAction>) => {
+    console.log("COMPONENT LEAVE & CANCEL ALL REQUEST");
     dispatch({
-      type: EmployeeType.RESET,
-      payload: {
-        success: false,
-        loading: true,
-        sendData: {},
-        data: [],
-        error: false,
-      },
+      type: Method.RESET,
     });
   };
 
-  export const deleteEmployee = (id: string | number | null) => {
-    return async (dispatch: Dispatch<EmployeeAction>) => {
-      console.log("Deleting...");
-      dispatch({
-        type: EmployeeType.DELETE,
-        payload: {
-          success: false,
-          loading: true,
-          sendData: {},
+export const deleteEmployee = (id: string | number | null) => {
+  return async (dispatch: Dispatch<ResponsesAction>) => {
+    console.log("Deleting...");
+    dispatch({
+      type: Method.DELETE,
+      payload: {
+        loading: true,
+        responses: {
+          method: Method.DELETE,
           data: [],
-          error: false,
+          status: 0,
+          message: "Loading",
+        },
+      },
+    });
+    try {
+      console.log("Sending..", id);
+      const { data } = await axios.delete(API_URL + "employee/" + id);
+      const response = data;
+      console.log(response);
+      dispatch({
+        type: Method.DELETE,
+        payload: {
+          loading: false,
+          responses: {
+            method: Method.DELETE,
+            data: response,
+            status: StatusCode.DELETE,
+            message: StatusMessage.DELETE,
+          },
         },
       });
-      try {
-        console.log("Sending..", id);
-        const { data } = await axios.delete(API_URL + "employee/" + id);
-        const response = data;
-        console.log(response);
-        dispatch({
-          type: EmployeeType.DELETE,
-          payload: {
-            success: true,
-            loading: false,
-            sendData: {},
-            data: true,
-            error: false,
+    } catch (error) {
+      dispatch({
+        type: Method.DELETE,
+        payload: {
+          loading: false,
+          responses: {
+            method: Method.DELETE,
+            data: [],
+            status: StatusCode.CLIENT_ERROR,
+            message: StatusMessage.CLIENT_ERROR,
           },
-        });
-      } catch (error) {
-        dispatch({
-          type: EmployeeType.DELETE,
-          payload: {
-            success: false,
-            loading: false,
-            sendData: {},
-            data: true,
-            error: true,
-          },
-        });
-      }
-    };
+        },
+      });
+    }
   };
+};
 
-  export const updateEmployee = (sendData:EmployeeBody) => {
-    return async (dispatch: Dispatch<EmployeeAction>) => {
-      console.log("POSTING...");
-      dispatch({
-        type: EmployeeType.UPDATE,
-        payload: {
-          success: false,
-          loading: true,
-          sendData: false,
+export const updateEmployee = (sendData: EmployeeBody) => {
+  return async (dispatch: Dispatch<ResponsesAction>) => {
+    console.log("POSTING...");
+    dispatch({
+      type: Method.UPDATE,
+      payload: {
+        loading: true,
+        responses: {
+          method: Method.UPDATE,
           data: [],
-          error: false,
+          status: 0,
+          message: "Loading",
+        },
+      },
+    });
+    try {
+      console.log("Editing", sendData.id);
+      const { data } = await axios.put(
+        API_URL + "employee/" + sendData.id,
+        sendData
+      );
+      const response = data;
+      console.log('EDIT RESPONSE', response);
+      dispatch({
+        type: Method.UPDATE,
+        payload: {
+          loading: false,
+          responses: {
+            method: Method.UPDATE,
+            data: response,
+            status: StatusCode.UPDATE,
+            message: StatusMessage.UPDATE,
+          },
         },
       });
-      try {
-        console.log("Editing", sendData);
-        const { data } = await axios.put(API_URL + "employee/" + sendData.id, sendData);
-        const response = data;
-        console.log(response);
-        dispatch({
-          type: EmployeeType.UPDATE,
-          payload: {
-            success: true,
-            loading: false,
-            sendData: response,
-            data: true,
-            error: false,
+    } catch (error) {
+      dispatch({
+        type: Method.UPDATE,
+        payload: {
+          loading: false,
+          responses: {
+            method: Method.UPDATE,
+            data: {},
+            status: StatusCode.CLIENT_ERROR,
+            message: StatusMessage.CLIENT_ERROR,
           },
-        });
-      } catch (error) {
-        dispatch({
-          type: EmployeeType.UPDATE,
-          payload: {
-            success: false,
-            loading: false,
-            sendData: false,
-            data: true,
-            error: true,
-          },
-        });
-      }
-    };
+        },
+      });
+    }
   };
+};

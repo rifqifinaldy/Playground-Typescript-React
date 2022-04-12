@@ -11,11 +11,12 @@ import { useEffect, useState, FormEvent, FC, SyntheticEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { employeeCreators, State } from "../../state";
+import { StatusCode } from "../../state/actions-types/responses.types";
 
 interface EditForm {
   edit: boolean;
   editData: {};
-  changeFormStatus: (e: SyntheticEvent, newValue: number, editData: {}) => void
+  changeFormStatus: (e: SyntheticEvent, newValue: number, editData: {}) => void;
 }
 
 export interface EmployeeBody {
@@ -31,12 +32,15 @@ export interface EmployeeBody {
 
 const AddEmployee: FC<EditForm> = ({ edit, editData, changeFormStatus }) => {
   const dispatch = useDispatch();
-  const { postEmployee, updateEmployee } = bindActionCreators(employeeCreators, dispatch);
+  const { postEmployee, updateEmployee } = bindActionCreators(
+    employeeCreators,
+    dispatch
+  );
   const employee = useSelector((state: State) => state.employee);
 
   // Initial Form State
   const [body, setBody] = useState<EmployeeBody>({
-    id : null,
+    id: null,
     full_name: "",
     employee_code: "",
     address: "",
@@ -54,29 +58,27 @@ const AddEmployee: FC<EditForm> = ({ edit, editData, changeFormStatus }) => {
 
   useEffect(() => {
     console.log("onMount", employee);
-    if (employee.data === true) {
-      if (employee.success) {
-        setBody(employee.sendData as EmployeeBody);
-        setAlert({
-          open: true,
-          color: "success",
-          text: "Data Has Been Saved",
-        });
-      } else {
-        setAlert({
-          open: true,
-          color: "error",
-          text: "An Error Has Occured",
-        });
-      }
-      setTimeout(() => {
-        setAlert({
-          open: false,
-          color: "info",
-          text: "Closing",
-        });
-      }, 5000);
+    if (employee.responses.status === StatusCode.UPDATE) {
+      setBody(employee.responses.data as EmployeeBody);
+      setAlert({
+        open: true,
+        color: "success",
+        text: "Data Has Been Saved",
+      });
+    } else if(employee.responses.status === StatusCode.CLIENT_ERROR) {
+      setAlert({
+        open: true,
+        color: "error",
+        text: "An Error Has Occured",
+      });
     }
+    setTimeout(() => {
+      setAlert({
+        open: false,
+        color: "info",
+        text: "Closing",
+      });
+    }, 5000);
   }, [employee]);
 
   useEffect(() => {

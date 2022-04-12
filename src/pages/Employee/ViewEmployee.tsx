@@ -25,6 +25,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Alert, Button, Grid, Paper, Zoom } from "@mui/material";
 import { Modal } from "../../components/Modal/Modal";
+import { StatusCode } from "../../state/actions-types/responses.types";
 
 const ViewEmployee: FC<{
   changeFormStatus: (e: SyntheticEvent, newValue: number, editData: {}) => void;
@@ -61,13 +62,15 @@ const ViewEmployee: FC<{
   }
 
   useEffect(() => {
-    //   Get Data On Mount
+    //   Get Data On Mounts
     dispatch(getEmployee);
     return () => {
       console.log("Cleaning Up");
       dispatch(resetEmployee);
     };
   }, []);
+
+  console.log(employee)
 
   const columns = useMemo(
     () => [
@@ -141,14 +144,14 @@ const ViewEmployee: FC<{
         components={{
           NoRowsOverlay: employee.loading
             ? LoadingOverlay
-            : employee.error
+            : employee.responses.status === StatusCode.CLIENT_ERROR
             ? ErrorOverlay
-            : employee.data instanceof Array && employee.data.length === 0
+            : employee.responses.data instanceof Array && employee.responses.data.length === 0
             ? NoDataOverlay
             : LoadingOverlay,
           Toolbar: GridToolbar,
         }}
-        rows={employee.data instanceof Array ? employee.data : []}
+        rows={employee.responses.data instanceof Array ? employee.responses.data : []}
         columns={columns}
       />
     </Paper>
