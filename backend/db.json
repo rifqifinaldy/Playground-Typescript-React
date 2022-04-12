@@ -295,6 +295,16 @@
       "npwp": "",
       "role": "",
       "id": 31
+    },
+    {
+      "full_name": "Erlangga",
+      "employee_code": "21321",
+      "address": "21321",
+      "mobile_no": "213123",
+      "age": 22,
+      "npwp": "3213",
+      "role": "21321",
+      "id": 32
     }
   ]
 }

@@ -1,40 +1,39 @@
 import theme from "../../style/theme";
 import { styled } from "@mui/material/styles";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  gridPageCountSelector,
+  gridPageSelector,
+  useGridApiContext,
+  useGridSelector,
+} from "@mui/x-data-grid";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
 
 export const RFDataGrid = styled(DataGrid)(({ theme }) => ({
-  border: 0,
+  border: 1,
   color: "rgba(0,0,0,.85)",
-  fontFamily: [
-    "-apple-system",
-    "BlinkMacSystemFont",
-    '"Segoe UI"',
-    "Roboto",
-    '"Helvetica Neue"',
-    "Arial",
-    "sans-serif",
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ].join(","),
   WebkitFontSmoothing: "auto",
   letterSpacing: "normal",
   "& .MuiDataGrid-columnsContainer": {
+    width: "100%",
     backgroundColor: "#fafafa",
   },
   "& .MuiDataGrid-iconSeparator": {
-    display: "none",
+    color: theme.palette.info.main
+  },
+  "& .MuiDataGrid-columnHeader": {
+    backgroundColor: theme.palette.secondary.main,
+  },
+  "& .MuiDataGrid-columnHeaderTitle" : {
+    color: "#131313",
+    fontSize: "14px",
+    fontWeight: "bold"
   },
   "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
-    borderRight: `1px solid ${"#f0f0f0"}`,
+    borderRight: "1px solid #fafafa",
   },
   "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
-    borderBottom: `1px solid ${"#f0f0f0"}`,
-  },
-  "& .MuiDataGrid-cell": {
-    color: "rgba(0,0,0,.85)",
-  },
-  "& .MuiPaginationItem-root": {
-    borderRadius: 0,
+    borderBottom: `1px solid #fafafa`,
   },
 }));

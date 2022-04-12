@@ -11,7 +11,10 @@ import {
 import { useEffect, useState, FormEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
+import { PageName } from "../../components/Title/page.config";
+import PageTitle from "../../components/Title/PageTitle";
 import { employeeCreators, State } from "../../state";
+import PeopleIcon from "@mui/icons-material/People";
 
 const AddEmployee = () => {
   const dispatch = useDispatch();
@@ -76,15 +79,9 @@ const AddEmployee = () => {
   };
 
   return (
-    <Paper variant="outlined">
+    <Paper>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <Grid px={1} py={2} container spacing={2}>
-          <Grid item md={12}>
-            <Typography ml={2} variant="h6">
-              Register New Employee
-            </Typography>
-            <Divider />
-          </Grid>
+        <Grid px={1} py={1} container spacing={2}>
           <Grid item md={6}>
             <TextField
               fullWidth

@@ -30,7 +30,7 @@ function App() {
             }}
           >
             <Toolbar />
-            <Box sx={{ p: 1 }}>
+            <Box>
               <AppRoute />
             </Box>
           </Box>

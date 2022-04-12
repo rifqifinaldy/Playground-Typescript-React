@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import { AppBar } from "./NavbarStyle";
+import { AppBar } from "./navbar.style";
 import { NavigationProps } from "../../utilities/interface";
 import { ListItemIcon, Menu, MenuItem, MenuList } from "@mui/material";
 
