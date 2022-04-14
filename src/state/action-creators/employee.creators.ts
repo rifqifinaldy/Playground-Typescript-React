@@ -12,7 +12,6 @@ import {
 // GET METHOD
 export const getEmployee = () => {
   return async (dispatch: Dispatch<ResponsesAction>) => {
-    console.log("MASUK DISPATCH GET")
     dispatch({
       type: Method.GET,
       payload: {
@@ -26,7 +25,6 @@ export const getEmployee = () => {
       },
     });
     try {
-      console.log("REQUEST")
       const { data } = await axios.get(API_URL + "employee");
       const response = data;
       console.log(response)
@@ -62,7 +60,6 @@ export const getEmployee = () => {
 // POST METHOD
 export const postEmployee = (sendData: {}) => {
   return async (dispatch: Dispatch<ResponsesAction>) => {
-    console.log("POSTING...");
     dispatch({
       type: Method.POST,
       payload: {
@@ -76,7 +73,6 @@ export const postEmployee = (sendData: {}) => {
       },
     });
     try {
-      console.log("Sending..", sendData);
       const { data } = await axios.post(API_URL + "employee", sendData);
       const response = data;
       console.log(response);
@@ -112,7 +108,6 @@ export const postEmployee = (sendData: {}) => {
 // RESET
 export const resetEmployee =
   () => async (dispatch: Dispatch<ResponsesAction>) => {
-    console.log("COMPONENT LEAVE & CANCEL ALL REQUEST");
     dispatch({
       type: Method.RESET,
     });
@@ -120,7 +115,6 @@ export const resetEmployee =
 
 export const deleteEmployee = (id: string | number | null) => {
   return async (dispatch: Dispatch<ResponsesAction>) => {
-    console.log("Deleting...");
     dispatch({
       type: Method.DELETE,
       payload: {
@@ -169,7 +163,6 @@ export const deleteEmployee = (id: string | number | null) => {
 
 export const updateEmployee = (sendData: EmployeeBody) => {
   return async (dispatch: Dispatch<ResponsesAction>) => {
-    console.log("POSTING...");
     dispatch({
       type: Method.UPDATE,
       payload: {
@@ -189,7 +182,6 @@ export const updateEmployee = (sendData: EmployeeBody) => {
         sendData
       );
       const response = data;
-      console.log('EDIT RESPONSE', response);
       dispatch({
         type: Method.UPDATE,
         payload: {

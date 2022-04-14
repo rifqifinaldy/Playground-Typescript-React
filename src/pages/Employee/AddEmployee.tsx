@@ -6,17 +6,21 @@ import {
   Paper,
   TextField,
   Zoom,
+  Stack,
 } from "@mui/material";
-import { useEffect, useState, FormEvent, FC, SyntheticEvent } from "react";
+import { useEffect, useState, FormEvent, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { employeeCreators, State } from "../../state";
 import { StatusCode } from "../../state/actions-types/responses.types";
+import { FormStatus } from "./Employee";
 
 interface EditForm {
-  edit: boolean;
-  editData: {};
-  changeFormStatus: (e: SyntheticEvent, newValue: number, editData: {}) => void;
+  form: {
+    edit: boolean,
+    data: {},
+  }
+  changeFormStatus: (formStatus: FormStatus) => void;
 }
 
 export interface EmployeeBody {
@@ -30,7 +34,18 @@ export interface EmployeeBody {
   role: string;
 }
 
-const AddEmployee: FC<EditForm> = ({ edit, editData, changeFormStatus }) => {
+const initialBody : EmployeeBody = {
+  id : null,
+  full_name : "",
+  employee_code: "",
+  address: "",
+  mobile_no: "",
+  age: 22,
+  npwp: "",
+  role: "",
+}
+
+const AddEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   const dispatch = useDispatch();
   const { postEmployee, updateEmployee } = bindActionCreators(
     employeeCreators,
@@ -39,16 +54,7 @@ const AddEmployee: FC<EditForm> = ({ edit, editData, changeFormStatus }) => {
   const employee = useSelector((state: State) => state.employee);
 
   // Initial Form State
-  const [body, setBody] = useState<EmployeeBody>({
-    id: null,
-    full_name: "",
-    employee_code: "",
-    address: "",
-    mobile_no: "",
-    age: 22,
-    npwp: "",
-    role: "",
-  });
+  const [body, setBody] = useState<EmployeeBody>(initialBody);
 
   const [alert, setAlert] = useState({
     open: false,
@@ -65,7 +71,7 @@ const AddEmployee: FC<EditForm> = ({ edit, editData, changeFormStatus }) => {
         color: "success",
         text: "Data Has Been Saved",
       });
-    } else if(employee.responses.status === StatusCode.CLIENT_ERROR) {
+    } else if (employee.responses.status === StatusCode.CLIENT_ERROR) {
       setAlert({
         open: true,
         color: "error",
@@ -82,16 +88,24 @@ const AddEmployee: FC<EditForm> = ({ edit, editData, changeFormStatus }) => {
   }, [employee]);
 
   useEffect(() => {
-    if (edit) {
-      console.log("Currently on Edit Mode", body);
-      setBody(editData as EmployeeBody);
+    console.log(form.data);
+    if (form.edit) {
+      setBody(form.data as EmployeeBody);
+    } else {
+      setBody(initialBody)
     }
-  }, [editData]);
+  }, [form]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     postEmployee(body);
-    changeFormStatus(e, 0, body);
+    let submit = {
+      e: e,
+      tabIndex: 0,
+      edit: true,
+      data: body,
+    };
+    changeFormStatus(submit);
   };
 
   const handleEdit = (e: FormEvent<HTMLFormElement>) => {
@@ -109,9 +123,20 @@ const AddEmployee: FC<EditForm> = ({ edit, editData, changeFormStatus }) => {
     });
   };
 
+  const handleClear = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    let clear = {
+      e: e,
+      tabIndex: 0,
+      edit: false,
+      data: initialBody,
+    };
+    changeFormStatus(clear);
+  };
+
   return (
     <Paper>
-      <form onSubmit={(e) => (edit ? handleEdit(e) : handleSubmit(e))}>
+      <form onSubmit={(e) => (form.edit ? handleEdit(e) : handleSubmit(e))}>
         <Grid px={1} py={1} container spacing={2}>
           <Grid item md={6}>
             <TextField
@@ -234,19 +259,30 @@ const AddEmployee: FC<EditForm> = ({ edit, editData, changeFormStatus }) => {
         <Grid container justifyContent="center" alignItems="center">
           <Grid item md={12}>
             <Divider>
-              <small>Register This Employee</small>
+              <small>{form.edit ? "Edit" : "Register"} This Employee</small>
             </Divider>
           </Grid>
           <Grid item md={3}>
-            <Button
-              disabled={alert.open}
-              type="submit"
-              fullWidth
-              color="primary"
-              variant="contained"
-            >
-              Submit
-            </Button>
+            <Stack spacing={2} direction="row">
+              <Button
+                disabled={alert.open}
+                fullWidth
+                type="submit"
+                color="primary"
+                variant="contained"
+              >
+                Submit
+              </Button>
+              <Button
+                disabled={!form.edit}
+                onClick={(e) => handleClear(e)}
+                fullWidth
+                color="info"
+                variant="contained"
+              >
+                New
+              </Button>
+            </Stack>
           </Grid>
         </Grid>
         {/* RESPONSE WRAPPER */}

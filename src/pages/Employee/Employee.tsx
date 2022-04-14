@@ -7,20 +7,34 @@ import ViewEmployee from "./ViewEmployee";
 import AddEmployee from "./AddEmployee";
 import { PageName } from "../../components/Title/page.config";
 
+export interface FormStatus {
+  e?: SyntheticEvent;
+  tabIndex: number;
+  edit: boolean;
+  data: {};
+}
+
 const Employee = () => {
   const [tab, setTab] = useState<number>(0);
-  const [edit, setEdit] = useState<boolean>(false);
-  const [editData, setEditData] = useState({});
-  const changeTab = (e: SyntheticEvent, newValue: number) => {
-    setTab(newValue);
-    setEdit(false);
+  const [form, setForm] = useState({
+    edit: false,
+    data: {},
+  });
+
+  const changeTab = (e: SyntheticEvent, tabIndex: number) => {
+    setTab(tabIndex);
+    setForm({
+      edit: false,
+      data: {},
+    });
   };
 
-  const changeFormStatus = (e: SyntheticEvent, newValue: number, editData:{}) => {
-    setTab(newValue);
-    setEdit(true);
-    setEditData(editData)
-    console.log("Triggered", newValue);
+  const changeFormStatus = (formStatus: FormStatus) => {
+    setTab(formStatus.tabIndex);
+    setForm({
+      edit: formStatus.edit,
+      data: formStatus.data,
+    });
   };
 
   return (
@@ -40,7 +54,7 @@ const Employee = () => {
             textColor="inherit"
             indicatorColor="secondary"
           >
-            <Tab label={edit ? "Edit" : "Create"} {...a11yProps(0)} />
+            <Tab label={form.edit ? "Edit" : "Create"} {...a11yProps(0)} />
             <Tab label="Employee Data" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
@@ -49,7 +63,7 @@ const Employee = () => {
         <PageTitle title={<PageName />} icon={<PeopleIcon />} />
         <Box sx={{ width: "100%" }}>
           <TabPanel value={tab} index={0}>
-            <AddEmployee edit={edit} editData={editData} changeFormStatus={changeFormStatus}/>
+            <AddEmployee form={form} changeFormStatus={changeFormStatus} />
           </TabPanel>
           <TabPanel value={tab} index={1}>
             <ViewEmployee changeFormStatus={changeFormStatus} />

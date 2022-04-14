@@ -23,12 +23,13 @@ import {
 import { RFDataGrid } from "../../components/DataGrid/table.style";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Alert, Button, Grid, Paper, Zoom } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import { Modal } from "../../components/Modal/Modal";
 import { StatusCode } from "../../state/actions-types/responses.types";
+import { FormStatus } from "./Employee";
 
 const ViewEmployee: FC<{
-  changeFormStatus: (e: SyntheticEvent, newValue: number, editData: {}) => void;
+  changeFormStatus: (formStatus: FormStatus) => void;
 }> = ({ changeFormStatus }) => {
   const dispatch = useDispatch();
   const [pageSize, setPageSize] = useState<number>(7);
@@ -42,13 +43,11 @@ const ViewEmployee: FC<{
   );
   const employee = useSelector((state: State) => state.employee);
   const rerender = useCallback(() => {
-    console.log("GET EMPLOYEE");
-    dispatch(getEmployee);
-  }, [dispatch, getEmployee]);
+    getEmployee();
+  }, [getEmployee]);
 
   const handleDelete = useCallback(
     () => () => {
-      console.log("Handling Delete ID :", dataID);
       deleteEmployee(dataID);
       setModal(false);
       rerender();
@@ -56,21 +55,27 @@ const ViewEmployee: FC<{
     [deleteEmployee, rerender, dataID]
   );
 
-  const handleEdit = (e: SyntheticEvent, row:GridRowId) => {
-    console.log("Edit Toggle", row)
-    changeFormStatus(e, 0, row)
-  }
+  const handleEdit = (e: SyntheticEvent, row: GridRowId) => {
+    let edit = {
+      e: e,
+      tabIndex: 0,
+      edit: true,
+      data: row,
+    };
+    changeFormStatus(edit);
+  };
 
   useEffect(() => {
     //   Get Data On Mounts
-    dispatch(getEmployee);
-    return () => {
-      console.log("Cleaning Up");
-      dispatch(resetEmployee);
-    };
+    rerender();
+
   }, []);
 
-  console.log(employee)
+  useEffect(() => {
+    return () => {
+      resetEmployee();
+    };
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -99,17 +104,16 @@ const ViewEmployee: FC<{
           <GridActionsCellItem
             icon={<EditIcon color="info" />}
             label="Edit"
-            onClick={(e)=>handleEdit(e, params.row)}
+            onClick={(e) => handleEdit(e, params.row)}
             showInMenu
           />,
         ],
       },
     ],
-    [handleEdit]
+    []
   );
 
   const openModal = (id: GridRowId) => {
-    console.log("OPEN MODAL", id);
     setModal(true);
     setDataID(id);
   };
@@ -146,12 +150,17 @@ const ViewEmployee: FC<{
             ? LoadingOverlay
             : employee.responses.status === StatusCode.CLIENT_ERROR
             ? ErrorOverlay
-            : employee.responses.data instanceof Array && employee.responses.data.length === 0
+            : employee.responses.data instanceof Array &&
+              employee.responses.data.length === 0
             ? NoDataOverlay
             : LoadingOverlay,
           Toolbar: GridToolbar,
         }}
-        rows={employee.responses.data instanceof Array ? employee.responses.data : []}
+        rows={
+          employee.responses.data instanceof Array
+            ? employee.responses.data
+            : []
+        }
         columns={columns}
       />
     </Paper>

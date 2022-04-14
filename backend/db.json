@@ -1,64 +1,122 @@
 {
   "employee": [
     {
-      "id": 10,
-      "full_name": "KOKOARO 7",
-      "employee_code": "OODSAdqwe",
-      "address": "12321",
-      "mobile_no": "213123",
+      "id": 3,
+      "full_name": "Erlangga Sucipto 2",
+      "employee_code": "12312312",
+      "address": "213213",
+      "mobile_no": "123123",
       "age": 22,
-      "npwp": "12312",
-      "role": "3123123"
+      "npwp": "123123",
+      "role": "213213"
     },
     {
-      "id": 11,
-      "full_name": "213213",
-      "employee_code": "21321",
-      "address": "123213",
-      "mobile_no": "12312",
+      "id": 4,
+      "full_name": "Erlangga 123213",
+      "employee_code": "123213",
+      "address": "213213",
+      "mobile_no": "123123",
       "age": 22,
       "npwp": "213213",
-      "role": "123213"
+      "role": "123213123"
     },
     {
-      "id": 12,
-      "full_name": "RE 2",
-      "employee_code": "12321",
-      "address": "sdqwe",
-      "mobile_no": "21321",
+      "id": 5,
+      "full_name": "213213",
+      "employee_code": "123213",
+      "address": "12321",
+      "mobile_no": "123",
+      "age": 22,
+      "npwp": "321312",
+      "role": "3213123"
+    },
+    {
+      "id": 6,
+      "full_name": "Erlangga",
+      "employee_code": "21321",
+      "address": "213213",
+      "mobile_no": "312312",
       "age": 22,
       "npwp": "3123",
       "role": "123213"
     },
     {
-      "id": 13,
-      "full_name": "1232132",
-      "employee_code": "123213",
-      "address": "213213",
-      "mobile_no": "213213",
+      "id": 7,
+      "full_name": "RE",
+      "employee_code": "21312",
+      "address": "12321",
+      "mobile_no": "21312",
       "age": 22,
+      "npwp": "3213",
+      "role": "213123123"
+    },
+    {
+      "id": 8,
+      "full_name": "Erlangga",
+      "employee_code": "12312",
+      "address": "21312",
+      "mobile_no": "31232",
+      "age": 22,
+      "npwp": "13123",
+      "role": "123213"
+    },
+    {
+      "full_name": "213123 EDITED",
+      "employee_code": "12312",
+      "address": "123213",
+      "mobile_no": "123",
+      "npwp": "213123",
+      "role": "213213",
+      "id": 9
+    },
+    {
+      "id": 10,
+      "full_name": "BARU",
+      "employee_code": "555594412311",
+      "address": "ADress",
+      "mobile_no": "21321",
+      "age": 22,
+      "npwp": "12321",
+      "role": "213123123"
+    },
+    {
+      "id": 11,
+      "full_name": "Baru 2 ",
+      "employee_code": "957842516",
+      "address": "aodhoq1203",
+      "mobile_no": "e123124123",
+      "age": 22,
+      "npwp": "12312",
+      "role": "3213124123"
+    },
+    {
+      "full_name": "65465",
+      "employee_code": "123123",
+      "address": "123213",
+      "mobile_no": "213123",
       "npwp": "213213",
-      "role": "213213"
+      "role": "123123213",
+      "id": 12
+    },
+    {
+      "id": 13,
+      "full_name": "Data Baru 7",
+      "employee_code": "12321",
+      "address": "213123",
+      "mobile_no": "12312",
+      "age": 22,
+      "npwp": "3123",
+      "role": "12321321"
     },
     {
       "id": 14,
-      "full_name": "RE ssad",
-      "employee_code": "asd",
-      "address": "213213",
-      "mobile_no": "213",
+      "full_name": "Create new data 1 (Edited)",
+      "employee_code": "95984114",
+      "address": "21314",
+      "mobile_no": "213123",
       "age": 22,
-      "npwp": "213",
+      "npwp": "124123",
       "role": "213213213"
-    },
-    {
-      "id": 15,
-      "full_name": "Violet 3",
-      "employee_code": "3213123",
-      "address": "12321",
-      "mobile_no": "21321",
-      "age": 22,
-      "npwp": "321312",
-      "role": "321312"
     }
   ]
 }
