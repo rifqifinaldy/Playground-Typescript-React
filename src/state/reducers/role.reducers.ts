@@ -8,7 +8,7 @@ const initialState: response = {
   deleteResult: {} as Result,
 };
 
-const employeeReducers = (state = initialState, action: ResponsesAction) => {
+const roleReducers = (state = initialState, action: ResponsesAction) => {
   switch (action.type) {
     case Method.GET:
       return {
@@ -40,4 +40,4 @@ const employeeReducers = (state = initialState, action: ResponsesAction) => {
   }
 };
 
-export default employeeReducers;
+export default roleReducers;

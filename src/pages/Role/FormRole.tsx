@@ -11,10 +11,17 @@ import {
 } from "@mui/material";
 import { useEffect, useState, FormEvent, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { bindActionCreators } from "redux";
-import { employeeCreators, State } from "../../state";
-import { StatusCode } from "../../state/actions-types/responses.types";
-import { EditForm, FormStatus } from "../../utilities/interface";
+import { State } from "../../state";
+import {
+  postRole,
+  resetRole,
+  updateRole,
+} from "../../state/action-creators/role.creators";
+import {
+  StatusCode,
+  StatusMessage,
+} from "../../state/actions-types/responses.types";
+import { EditForm } from "../../utilities/interface";
 
 interface Department {
   dept_id: number | null;
@@ -36,6 +43,11 @@ const initialBody: RoleBody = {
 };
 
 const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
+  const dispatch = useDispatch();
+  const { postResult, updateResult } = useSelector(
+    (state: State) => state.role
+  );
+
   // Initial Form State
   const [body, setBody] = useState<RoleBody>(initialBody);
   const [alert, setAlert] = useState({
@@ -55,11 +67,27 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   ];
 
   useEffect(() => {
-    console.log("onMount");
-  }, []);
-
+    console.log(postResult);
+    if (postResult.status === StatusCode.SUCCESS) {
+      setAlert({ open: true, color: "success", text: postResult.message });
+      setBody(postResult.data as RoleBody);
+      dispatch(resetRole());
+    } else if (updateResult.status === StatusCode.SUCCESS) {
+      setAlert({ open: true, color: "success", text: updateResult.message });
+      setBody(updateResult.data as RoleBody);
+      dispatch(resetRole());
+    } else if (
+      updateResult.status === StatusCode.ERROR ||
+      postResult.status === StatusCode.ERROR
+    ) {
+      setAlert({ open: true, color: "danger", text: StatusMessage.ERROR });
+    }
+    setTimeout(() => {
+      setAlert({ open: false, color: "success", text: "Reloading" });
+    }, 3000);
+  }, [postResult, updateResult, dispatch]);
+  
   useEffect(() => {
-    console.log(form.data);
     if (form.edit) {
       setBody(form.data as RoleBody);
     } else {
@@ -69,6 +97,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(postRole(body));
     let submit = {
       e: e,
       tabIndex: 0,
@@ -76,12 +105,18 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
       data: body,
     };
     changeFormStatus(submit);
-    console.log(body);
   };
 
   const handleEdit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Sending EDIT Data", body);
+    dispatch(updateRole(body));
+    let edit = {
+      e: e,
+      tabIndex: 0,
+      edit: true,
+      data: body,
+    };
+    changeFormStatus(edit);
   };
 
   const handleChange = (
@@ -110,7 +145,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
     }
   };
 
-  const handleClear = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleNew = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     let clear = {
       e: e,
@@ -207,7 +242,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
               </Button>
               <Button
                 disabled={!form.edit}
-                onClick={(e) => handleClear(e)}
+                onClick={(e) => handleNew(e)}
                 fullWidth
                 color="info"
                 variant="contained"

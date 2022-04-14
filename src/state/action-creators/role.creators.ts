@@ -1,16 +1,15 @@
 import { Dispatch } from "redux";
 import axios from "axios";
 import { API_URL } from "../../utilities/utilities";
-import { EmployeeBody } from "../../pages/Employee/FormEmployee";
 import { ResponsesAction } from "../actions/responses.action";
 import {
   Method,
   StatusCode,
   StatusMessage,
 } from "../actions-types/responses.types";
+import { RoleBody } from "../../pages/Role/FormRole";
 
-// GET METHOD
-export const getEmployee = () => {
+export const getRole = () => {
   return async (dispatch: Dispatch<ResponsesAction>) => {
     dispatch({
       type: Method.GET,
@@ -25,7 +24,7 @@ export const getEmployee = () => {
       },
     });
     try {
-      const { data } = await axios.get(API_URL + "employee");
+      const { data } = await axios.get(API_URL + "role");
       const response = data;
       dispatch({
         type: Method.GET,
@@ -56,8 +55,7 @@ export const getEmployee = () => {
   };
 };
 
-// POST METHOD
-export const postEmployee = (sendData: {}) => {
+export const postRole = (sendData: {}) => {
   return async (dispatch: Dispatch<ResponsesAction>) => {
     dispatch({
       type: Method.POST,
@@ -72,7 +70,7 @@ export const postEmployee = (sendData: {}) => {
       },
     });
     try {
-      const { data } = await axios.post(API_URL + "employee", sendData);
+      const { data } = await axios.post(API_URL + "role", sendData);
       const response = data;
       dispatch({
         type: Method.POST,
@@ -104,15 +102,14 @@ export const postEmployee = (sendData: {}) => {
 };
 
 // RESET
-export const resetEmployee =
-  () => async (dispatch: Dispatch<ResponsesAction>) => {
-    dispatch({
-      type: Method.RESET,
-    });
-  };
+export const resetRole = () => async (dispatch: Dispatch<ResponsesAction>) => {
+  dispatch({
+    type: Method.RESET,
+  });
+};
 
-  // Delete
-export const deleteEmployee = (id: string | number | null) => {
+// Delete
+export const deleteRole = (id: string | number | null) => {
   return async (dispatch: Dispatch<ResponsesAction>) => {
     dispatch({
       type: Method.DELETE,
@@ -127,7 +124,7 @@ export const deleteEmployee = (id: string | number | null) => {
       },
     });
     try {
-      const { data } = await axios.delete(API_URL + "employee/" + id);
+      const { data } = await axios.delete(API_URL + "role/" + id);
       const response = data;
       dispatch({
         type: Method.DELETE,
@@ -159,7 +156,7 @@ export const deleteEmployee = (id: string | number | null) => {
 };
 
 // Update
-export const updateEmployee = (sendData: EmployeeBody) => {
+export const updateRole = (sendData: RoleBody) => {
   return async (dispatch: Dispatch<ResponsesAction>) => {
     dispatch({
       type: Method.UPDATE,
@@ -175,7 +172,7 @@ export const updateEmployee = (sendData: EmployeeBody) => {
     });
     try {
       const { data } = await axios.put(
-        API_URL + "employee/" + sendData.id,
+        API_URL + "role/" + sendData.id,
         sendData
       );
       const response = data;

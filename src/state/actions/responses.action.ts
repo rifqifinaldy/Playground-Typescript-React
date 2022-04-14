@@ -1,23 +1,36 @@
-import { Method, response } from "../actions-types/responses.types";
+import { Method, Result } from "../actions-types/responses.types";
 
 interface GetAction {
   type: Method.GET;
-  payload: response;
+  payload: {
+    getResult: Result;
+  };
 }
-
 interface PostAction {
   type: Method.POST;
-  payload: response;
+  payload: {
+    postResult: Result;
+  };
+}
+interface DetailAction {
+  type: Method.DETAIL;
+  payload: {
+    detailResult: Result;
+  };
 }
 
 interface UpdateAction {
   type: Method.UPDATE;
-  payload: response;
+  payload: {
+    updateResult: Result;
+  };
 }
 
 interface DeleteAction {
   type: Method.DELETE;
-  payload: response;
+  payload: {
+    deleteResult: Result;
+  };
 }
 
 interface ResetAction {
@@ -27,6 +40,7 @@ interface ResetAction {
 export type ResponsesAction =
   | GetAction
   | PostAction
+  | DetailAction
   | UpdateAction
   | DeleteAction
   | ResetAction;

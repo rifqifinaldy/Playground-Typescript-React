@@ -10,10 +10,17 @@ import {
 } from "@mui/material";
 import { useEffect, useState, FormEvent, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { bindActionCreators } from "redux";
-import { employeeCreators, State } from "../../state";
-import { StatusCode } from "../../state/actions-types/responses.types";
-import { EditForm, FormStatus } from "../../utilities/interface";
+import { State } from "../../state";
+import {
+  postEmployee,
+  updateEmployee,
+} from "../../state/action-creators/employee.creators";
+import { getRole } from "../../state/action-creators/role.creators";
+import {
+  StatusCode,
+  StatusMessage,
+} from "../../state/actions-types/responses.types";
+import { EditForm } from "../../utilities/interface";
 
 export interface EmployeeBody {
   id: number | null;
@@ -26,28 +33,25 @@ export interface EmployeeBody {
   role: string;
 }
 
-const initialBody : EmployeeBody = {
-  id : null,
-  full_name : "",
+const initialBody: EmployeeBody = {
+  id: null,
+  full_name: "",
   employee_code: "",
   address: "",
   mobile_no: "",
   age: 22,
   npwp: "",
   role: "",
-}
+};
 
 const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   const dispatch = useDispatch();
-  const { postEmployee, updateEmployee } = bindActionCreators(
-    employeeCreators,
-    dispatch
+  const { postResult, updateResult } = useSelector(
+    (state: State) => state.employee
   );
-  const employee = useSelector((state: State) => state.employee);
 
   // Initial Form State
   const [body, setBody] = useState<EmployeeBody>(initialBody);
-
   const [alert, setAlert] = useState({
     open: false,
     color: "success",
@@ -55,42 +59,37 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   });
 
   useEffect(() => {
-    console.log("onMount", employee);
-    if (employee.responses.status === StatusCode.UPDATE) {
-      setBody(employee.responses.data as EmployeeBody);
-      setAlert({
-        open: true,
-        color: "success",
-        text: "Data Has Been Saved",
-      });
-    } else if (employee.responses.status === StatusCode.CLIENT_ERROR) {
-      setAlert({
-        open: true,
-        color: "error",
-        text: "An Error Has Occured",
-      });
+    console.log(postResult)
+    if (postResult.status === StatusCode.SUCCESS) {
+      setAlert({ open: true, color: "success", text: postResult.message });
+      setBody(postResult.data as EmployeeBody);
+      dispatch(getRole());
+    } else if (updateResult.status === StatusCode.SUCCESS) {
+      setAlert({ open: true, color: "success", text: updateResult.message });
+      setBody(updateResult.data as EmployeeBody);
+      dispatch(getRole());
+    } else if (
+      updateResult.status === StatusCode.ERROR ||
+      postResult.status === StatusCode.ERROR
+    ) {
+      setAlert({ open: true, color: "danger", text: StatusMessage.ERROR });
     }
     setTimeout(() => {
-      setAlert({
-        open: false,
-        color: "info",
-        text: "Closing",
-      });
-    }, 5000);
-  }, [employee]);
+      setAlert({ open:false, color:"success", text:"Reloading" })
+    }, 3000);
+  }, [postResult, updateResult, dispatch]);
 
   useEffect(() => {
-    console.log(form.data);
     if (form.edit) {
       setBody(form.data as EmployeeBody);
     } else {
-      setBody(initialBody)
+      setBody(initialBody);
     }
   }, [form]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postEmployee(body);
+    dispatch(postEmployee(body));
     let submit = {
       e: e,
       tabIndex: 0,
@@ -102,8 +101,7 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
 
   const handleEdit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Sending EDIT Data", body);
-    updateEmployee(body);
+    dispatch(updateEmployee(body));
   };
 
   const handleChange = (
@@ -115,7 +113,7 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
     });
   };
 
-  const handleClear = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleNew = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     let clear = {
       e: e,
@@ -267,7 +265,7 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
               </Button>
               <Button
                 disabled={!form.edit}
-                onClick={(e) => handleClear(e)}
+                onClick={(e) => handleNew(e)}
                 fullWidth
                 color="info"
                 variant="contained"

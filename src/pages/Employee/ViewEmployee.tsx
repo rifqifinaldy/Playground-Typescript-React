@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useCallback,
-  useMemo,
-  useState,
-  SyntheticEvent,
-  FC,
-} from "react";
+import { useEffect, useCallback, useState, SyntheticEvent, FC } from "react";
 import {
   GridActionsCellItem,
   GridRowId,
@@ -13,8 +6,7 @@ import {
   GridToolbar,
 } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { bindActionCreators } from "redux";
-import { employeeCreators, State } from "../../state";
+import { State } from "../../state";
 import {
   ErrorOverlay,
   LoadingOverlay,
@@ -27,6 +19,11 @@ import { Button, Paper } from "@mui/material";
 import { Modal } from "../../components/Modal/Modal";
 import { StatusCode } from "../../state/actions-types/responses.types";
 import { FormStatus } from "../../utilities/interface";
+import {
+  deleteEmployee,
+  getEmployee,
+  resetEmployee,
+} from "../../state/action-creators/employee.creators";
 
 const ViewEmployee: FC<{
   changeFormStatus: (formStatus: FormStatus) => void;
@@ -37,25 +34,22 @@ const ViewEmployee: FC<{
   const [dataID, setDataID] = useState<number | string | null>(null);
 
   // Redux State
-  const { getEmployee, resetEmployee, deleteEmployee } = bindActionCreators(
-    employeeCreators,
-    dispatch
-  );
-  const employee = useSelector((state: State) => state.employee);
+  const { getResult } = useSelector((state: State) => state.employee);
+
   const rerender = useCallback(() => {
-    getEmployee();
-  }, [getEmployee]);
+    dispatch(getEmployee());
+  }, [dispatch]);
 
   const handleDelete = useCallback(
     () => () => {
-      deleteEmployee(dataID);
+      dispatch(deleteEmployee(dataID));
       setModal(false);
       rerender();
     },
-    [deleteEmployee, rerender, dataID]
+    [dispatch, dataID, rerender]
   );
 
-  const handleEdit = (e: SyntheticEvent, row: GridRowId) => {
+  const handleEdit = useCallback((e: SyntheticEvent, row: GridRowId) => {
     let edit = {
       e: e,
       tabIndex: 0,
@@ -63,55 +57,51 @@ const ViewEmployee: FC<{
       data: row,
     };
     changeFormStatus(edit);
-  };
+  }, [changeFormStatus]);
 
   useEffect(() => {
     //   Get Data On Mounts
     rerender();
-
-  }, []);
+  }, [rerender]);
 
   useEffect(() => {
     return () => {
-      resetEmployee();
+      dispatch(resetEmployee());
     };
-  }, []);
+  }, [dispatch]);
 
-  const columns = useMemo(
-    () => [
-      {
-        field: "employee_code",
-        type: "string",
-        headerName: "Employee Code",
-        flex: 1,
-      },
-      { field: "full_name", type: "string", headerName: "Full Name", flex: 1 },
-      { field: "age", type: "string", headerName: "Age", width: 100 },
-      { field: "address", type: "string", headerName: "Address", flex: 1 },
-      { field: "role", type: "string", headerName: "Role", flex: 1 },
-      {
-        field: "actions",
-        headerName: "Action",
-        type: "actions",
-        width: 100,
-        getActions: (params: GridRowParams) => [
-          <GridActionsCellItem
-            icon={<DeleteIcon color="error" />}
-            label="Delete"
-            onClick={() => openModal(params.id)}
-            showInMenu
-          />,
-          <GridActionsCellItem
-            icon={<EditIcon color="info" />}
-            label="Edit"
-            onClick={(e) => handleEdit(e, params.row)}
-            showInMenu
-          />,
-        ],
-      },
-    ],
-    []
-  );
+  const columns = [
+    {
+      field: "employee_code",
+      type: "string",
+      headerName: "Employee Code",
+      flex: 1,
+    },
+    { field: "full_name", type: "string", headerName: "Full Name", flex: 1 },
+    { field: "age", type: "string", headerName: "Age", width: 100 },
+    { field: "address", type: "string", headerName: "Address", flex: 1 },
+    { field: "role", type: "string", headerName: "Role", flex: 1 },
+    {
+      field: "actions",
+      headerName: "Action",
+      type: "actions",
+      width: 100,
+      getActions: (params: GridRowParams) => [
+        <GridActionsCellItem
+          icon={<DeleteIcon color="error" />}
+          label="Delete"
+          onClick={() => openModal(params.id)}
+          showInMenu
+        />,
+        <GridActionsCellItem
+          icon={<EditIcon color="info" />}
+          label="Edit"
+          onClick={(e) => handleEdit(e, params.row)}
+          showInMenu
+        />,
+      ],
+    },
+  ];
 
   const openModal = (id: GridRowId) => {
     setModal(true);
@@ -146,21 +136,16 @@ const ViewEmployee: FC<{
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         rowsPerPageOptions={[7, 14, 21]}
         components={{
-          NoRowsOverlay: employee.loading
+          NoRowsOverlay: getResult.loading
             ? LoadingOverlay
-            : employee.responses.status === StatusCode.CLIENT_ERROR
+            : getResult.status === StatusCode.ERROR
             ? ErrorOverlay
-            : employee.responses.data instanceof Array &&
-              employee.responses.data.length === 0
+            : getResult.data instanceof Array && getResult.data.length === 0
             ? NoDataOverlay
             : LoadingOverlay,
           Toolbar: GridToolbar,
         }}
-        rows={
-          employee.responses.data instanceof Array
-            ? employee.responses.data
-            : []
-        }
+        rows={getResult.data instanceof Array ? getResult.data : []}
         columns={columns}
       />
     </Paper>

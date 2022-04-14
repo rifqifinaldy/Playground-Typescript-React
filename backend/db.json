@@ -1,130 +1,124 @@
 {
   "employee": [
     {
-      "id": 3,
-      "full_name": "Erlangga Sucipto 2",
-      "employee_code": "12312312",
-      "address": "213213",
-      "mobile_no": "123123",
-      "age": 22,
-      "npwp": "123123",
-      "role": "213213"
+      "id": 1,
+      "role_name": "321321",
+      "role_code": "21321",
+      "department": {
+        "name": "",
+        "dept_id": null
+      }
     },
     {
-      "id": 4,
-      "full_name": "Erlangga 123213",
-      "employee_code": "123213",
-      "address": "213213",
-      "mobile_no": "123123",
-      "age": 22,
-      "npwp": "213213",
-      "role": "123213123"
-    },
+      "id": 2,
+      "full_name": "Erlangga AR",
+      "employee_code": "12321",
+      "address": "2222",
+      "mobile_no": "213123",
+      "age": "222",
+      "npwp": "2211",
+      "role": "213123"
+    }
+  ],
+  "role": [
     {
       "id": 5,
-      "full_name": "213213",
-      "employee_code": "123213",
-      "address": "12321",
-      "mobile_no": "123",
-      "age": 22,
-      "npwp": "321312",
-      "role": "3213123"
-    },
-    {
-      "id": 6,
-      "full_name": "Erlangga",
-      "employee_code": "21321",
-      "address": "213213",
-      "mobile_no": "312312",
-      "age": 22,
-      "npwp": "3123",
-      "role": "123213"
+      "role_name": "3123123",
+      "role_code": "nnn",
+      "department": {
+        "name": "Engineer",
+        "dept_id": 1
+      }
     },
     {
       "id": 7,
-      "full_name": "RE",
-      "employee_code": "21312",
-      "address": "12321",
-      "mobile_no": "21312",
-      "age": 22,
-      "npwp": "3213",
-      "role": "213123123"
+      "role_name": "321321",
+      "role_code": "ENG",
+      "department": {
+        "name": "Engineer",
+        "dept_id": 1
+      }
     },
     {
-      "id": 8,
-      "full_name": "Erlangga",
-      "employee_code": "12312",
-      "address": "21312",
-      "mobile_no": "31232",
-      "age": 22,
-      "npwp": "13123",
-      "role": "123213"
-    },
-    {
-      "full_name": "213123 EDITED",
-      "employee_code": "12312",
-      "address": "123213",
-      "mobile_no": "123",
-      "npwp": "213123",
-      "role": "213213",
-      "id": 9
+      "id": 9,
+      "role_name": "qwe",
+      "role_code": "QWEQWEWQSA",
+      "department": {
+        "name": "HR",
+        "dept_id": 0
+      }
     },
     {
       "id": 10,
-      "full_name": "BARU",
-      "employee_code": "555594412311",
-      "address": "ADress",
-      "mobile_no": "21321",
-      "age": 22,
-      "npwp": "12321",
-      "role": "213123123"
+      "role_name": "3123123",
+      "role_code": "SAD SAD",
+      "department": {
+        "name": "Engineer",
+        "dept_id": 1
+      }
     },
     {
       "id": 11,
-      "full_name": "Baru 2 ",
-      "employee_code": "957842516",
-      "address": "aodhoq1203",
-      "mobile_no": "e123124123",
-      "age": 22,
-      "npwp": "12312",
-      "role": "3213124123"
+      "role_name": "3123123",
+      "role_code": "ENG",
+      "department": {
+        "name": "Engineer",
+        "dept_id": 1
+      }
     },
     {
-      "full_name": "65465",
-      "employee_code": "123123",
-      "address": "123213",
-      "mobile_no": "213123",
-      "npwp": "213213",
-      "role": "123123213",
-      "id": 12
+      "id": 12,
+      "role_name": "wqewqe",
+      "role_code": "SAD",
+      "department": {
+        "name": "Engineer",
+        "dept_id": 1
+      }
     },
     {
-      "id": 13,
-      "full_name": "Data Baru 7",
-      "employee_code": "12321",
-      "address": "213123",
-      "mobile_no": "12312",
-      "age": 22,
-      "npwp": "3123",
-      "role": "12321321"
+      "id": 17,
+      "role_name": "123123",
+      "role_code": "SAD SAD",
+      "department": {
+        "name": "HR",
+        "dept_id": 0
+      }
     },
     {
-      "id": 14,
-      "full_name": "Create new data 1 (Edited)",
-      "employee_code": "95984114",
-      "address": "21314",
-      "mobile_no": "213123",
-      "age": 22,
-      "npwp": "124123",
-      "role": "213213213"
-    }
-  ],
-  "role" : [
+      "id": 18,
+      "role_name": "213123",
+      "role_code": "SAD SADasdwqe",
+      "department": {
+        "name": "HR",
+        "dept_id": 0
+      }
+    },
     {
-      "id" : 0,
-      "role_name" : "Mobile Developer",
-      "role_code" : "MBL",
-      "division" : {"dept_id" : 0, "name": "Engineer"}
+      "id": 19,
+      "role_name": "213123",
+      "role_code": "21321",
+      "department": {
+        "name": "Engineer",
+        "dept_id": 1
+      }
+    },
+    {
+      "id": 20,
+      "role_name": "213123",
+      "role_code": "213123",
+      "department": {
+        "name": "HR",
+        "dept_id": 0
+      }
+    },
+    {
+      "id": 21,
+      "role_name": "321321",
+      "role_code": "ENG 212312 ASD",
+      "department": {
+        "name": "Engineer",
+        "dept_id": 1
+      }
     }
   ]
 }
