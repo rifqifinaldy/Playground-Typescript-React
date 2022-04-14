@@ -1,18 +1,12 @@
 import { AppBar, Box, Paper, Tab, Tabs } from "@mui/material";
 import { useState, SyntheticEvent } from "react";
 import TabPanel, { a11yProps } from "../../components/Tabs/Tabs";
-import PeopleIcon from "@mui/icons-material/People";
+import EngineeringIcon from "@mui/icons-material/Engineering";
 import PageTitle from "../../components/Title/PageTitle";
 import ViewEmployee from "./ViewEmployee";
-import AddEmployee from "./AddEmployee";
+import FormEmployee from "./FormEmployee";
 import { PageName } from "../../components/Title/page.config";
-
-export interface FormStatus {
-  e?: SyntheticEvent;
-  tabIndex: number;
-  edit: boolean;
-  data: {};
-}
+import { FormStatus } from "../../utilities/interface";
 
 const Employee = () => {
   const [tab, setTab] = useState<number>(0);
@@ -60,10 +54,10 @@ const Employee = () => {
         </AppBar>
       </Box>
       <Paper sx={{ mx: 1, p: 1 }}>
-        <PageTitle title={<PageName />} icon={<PeopleIcon />} />
+        <PageTitle title={<PageName />} icon={<EngineeringIcon />} />
         <Box sx={{ width: "100%" }}>
           <TabPanel value={tab} index={0}>
-            <AddEmployee form={form} changeFormStatus={changeFormStatus} />
+            <FormEmployee form={form} changeFormStatus={changeFormStatus} />
           </TabPanel>
           <TabPanel value={tab} index={1}>
             <ViewEmployee changeFormStatus={changeFormStatus} />

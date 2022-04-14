@@ -118,5 +118,13 @@
       "npwp": "124123",
       "role": "213213213"
     }
+  ],
+  "role" : [
+    {
+      "id" : 0,
+      "role_name" : "Mobile Developer",
+      "role_code" : "MBL",
+      "division" : {"dept_id" : 0, "name": "Engineer"}
+    }
   ]
 }

@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import axios from "axios";
 import { API_URL } from "../../utilities/utilities";
-import { EmployeeBody } from "../../pages/Employee/AddEmployee";
+import { EmployeeBody } from "../../pages/Employee/FormEmployee";
 import { ResponsesAction } from "../actions/responses.action";
 import {
   Method,

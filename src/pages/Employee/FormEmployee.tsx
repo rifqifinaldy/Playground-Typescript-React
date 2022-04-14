@@ -13,15 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { employeeCreators, State } from "../../state";
 import { StatusCode } from "../../state/actions-types/responses.types";
-import { FormStatus } from "./Employee";
-
-interface EditForm {
-  form: {
-    edit: boolean,
-    data: {},
-  }
-  changeFormStatus: (formStatus: FormStatus) => void;
-}
+import { EditForm, FormStatus } from "../../utilities/interface";
 
 export interface EmployeeBody {
   id: number | null;
@@ -45,7 +37,7 @@ const initialBody : EmployeeBody = {
   role: "",
 }
 
-const AddEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
+const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   const dispatch = useDispatch();
   const { postEmployee, updateEmployee } = bindActionCreators(
     employeeCreators,
@@ -300,4 +292,4 @@ const AddEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   );
 };
 
-export default AddEmployee;
+export default FormEmployee;

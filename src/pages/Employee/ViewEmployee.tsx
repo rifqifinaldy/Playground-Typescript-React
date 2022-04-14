@@ -26,7 +26,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Button, Paper } from "@mui/material";
 import { Modal } from "../../components/Modal/Modal";
 import { StatusCode } from "../../state/actions-types/responses.types";
-import { FormStatus } from "./Employee";
+import { FormStatus } from "../../utilities/interface";
 
 const ViewEmployee: FC<{
   changeFormStatus: (formStatus: FormStatus) => void;

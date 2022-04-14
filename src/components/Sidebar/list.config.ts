@@ -6,7 +6,8 @@ import {
   MonetizationOn,
   AddTask,
   AccountBalance,
-  Engineering
+  Engineering,
+  SafetyDivider
 } from "@mui/icons-material";
 
 // DEKLARASI DATA DUMMY UNTUK SIDEBAR
@@ -19,7 +20,8 @@ export const icons = {
   MonetizationOn,
   AddTask,
   AccountBalance,
-  Engineering
+  Engineering,
+  SafetyDivider
 };
 
 export interface NavigationSubItem {
@@ -84,6 +86,12 @@ export const sidebarData: NavigationItem[] = [
         icon: "Engineering",
         target: "/hr/employee",
       },
+      {
+        id: 4.2,
+        text : "Role",
+        icon : "SafetyDivider",
+        target: "/hr/role"
+      }
     ],
   },
   {
