@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useCallback,
-  useState,
-  SyntheticEvent,
-  FC,
-} from "react";
+import { useEffect, useCallback, useState, SyntheticEvent, FC } from "react";
 import {
   GridActionsCellItem,
   GridRowId,
@@ -25,12 +19,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Button, Paper } from "@mui/material";
 import { Modal } from "../../components/Modal/Modal";
 import { FormStatus } from "../../utilities/interface";
-import { deleteRole, getRole, resetRole } from "../../state/action-creators/role.creators";
+import { deleteRole, getRole } from "../../state/action-creators/role.creators";
 import { StatusCode } from "../../state/actions-types/responses.types";
 
 const ViewRole: FC<{
+  update: boolean;
   changeFormStatus: (formStatus: FormStatus) => void;
-}> = ({ changeFormStatus }) => {
+}> = ({ update, changeFormStatus }) => {
   const { getResult } = useSelector((state: State) => state.role);
   const dispatch = useDispatch();
 
@@ -67,13 +62,7 @@ const ViewRole: FC<{
   useEffect(() => {
     //   Get Data On Mounts
     rerender();
-  }, [rerender, changeFormStatus]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetRole());
-    };
-  }, [dispatch]);
+  }, [rerender, changeFormStatus, update]);
 
   const columns = [
     {
@@ -113,8 +102,6 @@ const ViewRole: FC<{
       ],
     },
   ];
-
-  console.log('getdata', getResult)
 
   const openModal = (id: GridRowId) => {
     setModal(true);

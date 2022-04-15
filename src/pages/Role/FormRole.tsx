@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../state";
 import {
   postRole,
-  resetRole,
   updateRole,
 } from "../../state/action-creators/role.creators";
 import {
@@ -48,6 +47,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
     (state: State) => state.role
   );
 
+  console.log("form", form.data);
   // Initial Form State
   const [body, setBody] = useState<RoleBody>(initialBody);
   const [alert, setAlert] = useState({
@@ -67,15 +67,12 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   ];
 
   useEffect(() => {
-    console.log(postResult);
     if (postResult.status === StatusCode.SUCCESS) {
       setAlert({ open: true, color: "success", text: postResult.message });
       setBody(postResult.data as RoleBody);
-      dispatch(resetRole());
     } else if (updateResult.status === StatusCode.SUCCESS) {
       setAlert({ open: true, color: "success", text: updateResult.message });
       setBody(updateResult.data as RoleBody);
-      dispatch(resetRole());
     } else if (
       updateResult.status === StatusCode.ERROR ||
       postResult.status === StatusCode.ERROR
@@ -86,7 +83,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
       setAlert({ open: false, color: "success", text: "Reloading" });
     }, 3000);
   }, [postResult, updateResult, dispatch]);
-  
+
   useEffect(() => {
     if (form.edit) {
       setBody(form.data as RoleBody);
@@ -110,13 +107,13 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   const handleEdit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateRole(body));
-    let edit = {
+    let submit = {
       e: e,
       tabIndex: 0,
       edit: true,
       data: body,
     };
-    changeFormStatus(edit);
+    changeFormStatus(submit);
   };
 
   const handleChange = (

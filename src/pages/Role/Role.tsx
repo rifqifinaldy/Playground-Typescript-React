@@ -14,7 +14,10 @@ const Role = () => {
     data: {},
   });
 
+  const [update, setUpdate] = useState(false);
+
   const changeFormStatus = (formStatus: FormStatus) => {
+    setUpdate(!update);
     setForm({
       edit: formStatus.edit,
       data: formStatus.data,
@@ -25,8 +28,8 @@ const Role = () => {
     <Paper sx={{ my: 2, mx: 2, p: 1 }}>
       <PageTitle title={<PageName />} icon={<SafetyDivider />} />
       <Box sx={{ width: "100%" }}>
-        <FormRole form={form} changeFormStatus={changeFormStatus}/>
-        <ViewRole changeFormStatus={changeFormStatus} />
+        <FormRole form={form} changeFormStatus={changeFormStatus} />
+        <ViewRole update={update} changeFormStatus={changeFormStatus} />
       </Box>
     </Paper>
   );

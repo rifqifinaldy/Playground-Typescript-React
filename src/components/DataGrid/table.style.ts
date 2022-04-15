@@ -1,14 +1,7 @@
-import theme from "../../style/theme";
 import { styled } from "@mui/material/styles";
 import {
   DataGrid,
-  gridPageCountSelector,
-  gridPageSelector,
-  useGridApiContext,
-  useGridSelector,
 } from "@mui/x-data-grid";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
 
 export const RFDataGrid = styled(DataGrid)(({ theme }) => ({
   border: 1,

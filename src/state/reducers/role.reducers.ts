@@ -19,6 +19,7 @@ const roleReducers = (state = initialState, action: ResponsesAction) => {
       return {
         ...state,
         postResult: action.payload.postResult,
+        updateResult: initialState.updateResult,
       };
     case Method.DELETE:
       return {
@@ -29,6 +30,7 @@ const roleReducers = (state = initialState, action: ResponsesAction) => {
     case Method.UPDATE:
       return {
         ...state,
+        postResult: initialState.postResult,
         updateResult: action.payload.updateResult,
       };
     case Method.RESET:

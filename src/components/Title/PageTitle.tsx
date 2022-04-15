@@ -1,4 +1,4 @@
-import { Divider, Typography } from "@mui/material";
+import { Divider } from "@mui/material";
 import { Box } from "@mui/system";
 import { FC } from "react";
 
