@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../state";
 import {
   postRole,
+  resetRole,
   updateRole,
 } from "../../state/action-creators/role.creators";
 import {
@@ -43,11 +44,10 @@ const initialBody: RoleBody = {
 
 const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   const dispatch = useDispatch();
-  const { postResult, updateResult } = useSelector(
+  const { postRoleResult, updateRoleResult } = useSelector(
     (state: State) => state.role
   );
 
-  console.log("form", form.data);
   // Initial Form State
   const [body, setBody] = useState<RoleBody>(initialBody);
   const [alert, setAlert] = useState({
@@ -67,31 +67,32 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   ];
 
   useEffect(() => {
-    if (postResult.status === StatusCode.SUCCESS) {
-      setAlert({ open: true, color: "success", text: postResult.message });
-      setBody(postResult.data as RoleBody);
-    } else if (updateResult.status === StatusCode.SUCCESS) {
-      setAlert({ open: true, color: "success", text: updateResult.message });
-      setBody(updateResult.data as RoleBody);
+    if (postRoleResult.status === StatusCode.SUCCESS) {
+      setAlert({ open: true, color: "success", text: postRoleResult.message });
+      setBody(postRoleResult.data as unknown as RoleBody);
+    } else if (updateRoleResult.status === StatusCode.SUCCESS) {
+      setAlert({ open: true, color: "success", text: updateRoleResult.message });
+      setBody(updateRoleResult.data as unknown as RoleBody);
     } else if (
-      updateResult.status === StatusCode.ERROR ||
-      postResult.status === StatusCode.ERROR
+      updateRoleResult.status === StatusCode.ERROR ||
+      postRoleResult.status === StatusCode.ERROR
     ) {
       setAlert({ open: true, color: "danger", text: StatusMessage.ERROR });
     }
     setTimeout(() => {
       setAlert({ open: false, color: "success", text: "Reloading" });
     }, 3000);
-  }, [postResult, updateResult, dispatch]);
+  }, [postRoleResult, updateRoleResult, dispatch]);
 
+  // Cleanup Function
   useEffect(() => {
-    if (form.edit) {
-      setBody(form.data as RoleBody);
-    } else {
-      setBody(initialBody);
-    }
-  }, [form]);
+    return () => {
+      console.log("leaving this component")
+      dispatch(resetRole());
+    };
+  }, [dispatch]);
 
+  // Submit Function
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(postRole(body));
@@ -103,6 +104,15 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
     };
     changeFormStatus(submit);
   };
+
+  // Edit Function
+  useEffect(() => {
+    if (form.edit) {
+      setBody(form.data as RoleBody);
+    } else {
+      setBody(initialBody);
+    }
+  }, [form]);
 
   const handleEdit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -116,6 +126,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
     changeFormStatus(submit);
   };
 
+  // Input Change Function
   const handleChange = (
     e: FormEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
@@ -124,7 +135,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
       [e.currentTarget.name]: e.currentTarget.value,
     });
   };
-
+  
   const autoChange = (
     event: React.SyntheticEvent<Element, Event>,
     value: Department | null

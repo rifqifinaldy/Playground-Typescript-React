@@ -2,66 +2,73 @@
   "employee": [
     {
       "id": 1,
-      "role_name": "321321",
-      "role_code": "21321",
-      "department": {
-        "name": "",
-        "dept_id": null
+      "full_name": "Rifqi Finaldy",
+      "employee_code": "EMP 2001",
+      "address": "Antapani, Bandung",
+      "mobile_no": "08574156",
+      "age": "25",
+      "npwp": "6824875456",
+      "role": {
+        "id": 4,
+        "role_name": "HR",
+        "role_code": "HR-C",
+        "department": {
+          "name": "HR",
+          "dept_id": 0
+        }
       }
-    },
-    {
-      "id": 2,
-      "full_name": "Erlangga AR",
-      "employee_code": "12321",
-      "address": "2222",
-      "mobile_no": "213123",
-      "age": "222",
-      "npwp": "2211",
-      "role": "213123"
-    },
-    {
-      "id": 3,
-      "full_name": "Erlangga",
-      "employee_code": "123213",
-      "address": "21312",
-      "mobile_no": "3213",
-      "age": 22,
-      "npwp": "213123213",
-      "role": "123123213"
     }
   ],
   "role": [
     {
-      "id": 6,
+      "id": 2,
+      "role_name": "Mobile Developer",
+      "role_code": "ENG-MB",
+      "department": {
+        "name": "Engineer",
+        "dept_id": 1
+      }
+    },
+    {
+      "id": 4,
+      "role_name": "HR",
+      "role_code": "HR-C",
+      "department": {
+        "name": "HR",
+        "dept_id": 0
+      }
+    },
+    {
+      "id": 5,
       "role_name": "Frontend Developer",
-      "role_code": "SAD JA 233",
+      "role_code": "213123",
       "department": {
         "name": "Marketing",
         "dept_id": 2
       }
     },
     {
-      "id": 7,
-      "role_name": "FE FE",
-      "role_code": "ROLE CODE 2",
+      "id": 6,
+      "role_name": "Frontend Developer",
+      "role_code": "Role Code Create",
       "department": {
-        "name": "Finance",
-        "dept_id": 3
+        "name": "Engineer",
+        "dept_id": 1
+      }
+    },
+    {
+      "id": 7,
+      "role_name": "Frontend Developer",
+      "role_code": "Role Code Create",
+      "department": {
+        "name": "Marketing",
+        "dept_id": 2
       }
     },
     {
       "id": 8,
       "role_name": "Frontend Developer",
-      "role_code": "Role Code Create 2",
-      "department": {
-        "name": "Marketing",
-        "dept_id": 2
-      }
-    },
-    {
-      "id": 9,
-      "role_name": "Frontend Developer",
-      "role_code": "SAD SAD 3",
+      "role_code": "Role Code Create",
       "department": {
         "name": "Marketing",
         "dept_id": 2
@@ -69,20 +76,11 @@
     },
     {
       "id": 10,
-      "role_name": "ROLE",
-      "role_code": "NEW AH 2",
-      "department": {
-        "name": "Marketing",
-        "dept_id": 2
-      }
-    },
-    {
-      "id": 11,
       "role_name": "Frontend Developer",
-      "role_code": "Role Code UPDATE 2",
+      "role_code": "Role Code Create",
       "department": {
-        "name": "Marketing",
-        "dept_id": 2
+        "name": "Engineer",
+        "dept_id": 1
       }
     }
   ]

@@ -26,7 +26,7 @@ const ViewRole: FC<{
   update: boolean;
   changeFormStatus: (formStatus: FormStatus) => void;
 }> = ({ update, changeFormStatus }) => {
-  const { getResult } = useSelector((state: State) => state.role);
+  const { getRoleResult } = useSelector((state: State) => state.role);
   const dispatch = useDispatch();
 
   const [pageSize, setPageSize] = useState<number>(7);
@@ -136,16 +136,16 @@ const ViewRole: FC<{
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         rowsPerPageOptions={[7, 14, 21]}
         components={{
-          NoRowsOverlay: getResult.loading
+          NoRowsOverlay: getRoleResult.loading
             ? LoadingOverlay
-            : getResult.status === StatusCode.ERROR
+            : getRoleResult.status === StatusCode.ERROR
             ? ErrorOverlay
-            : getResult.data instanceof Array && getResult.data.length === 0
+            : getRoleResult.data instanceof Array && getRoleResult.data.length === 0
             ? NoDataOverlay
             : LoadingOverlay,
           Toolbar: GridToolbar,
         }}
-        rows={getResult.data instanceof Array ? getResult.data : []}
+        rows={getRoleResult.data instanceof Array ? getRoleResult.data : []}
         columns={columns}
       />
     </Paper>

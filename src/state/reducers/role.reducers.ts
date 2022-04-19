@@ -2,10 +2,10 @@ import { ResponsesAction } from "../actions/responses.action";
 import { Method, response, Result } from "../actions-types/responses.types";
 
 const initialState: response = {
-  getResult: {} as Result,
-  postResult: {} as Result,
-  updateResult: {} as Result,
-  deleteResult: {} as Result,
+  getRoleResult: {} as Result,
+  postRoleResult : {} as Result,
+  updateRoleResult: {} as Result,
+  deleteRoleResult: {} as Result,
 };
 
 const roleReducers = (state = initialState, action: ResponsesAction) => {
@@ -13,25 +13,25 @@ const roleReducers = (state = initialState, action: ResponsesAction) => {
     case Method.GET:
       return {
         ...state,
-        getResult: action.payload.getResult,
+        getRoleResult: action.payload.getResult,
       };
     case Method.POST:
       return {
         ...state,
-        postResult: action.payload.postResult,
-        updateResult: initialState.updateResult,
+        updateRoleResult: initialState.updateRoleResult,
+        postRoleResult: action.payload.postResult
       };
     case Method.DELETE:
       return {
         ...state,
-        deleteResult: action.payload.deleteResult,
+        deleteRoleResult: action.payload.deleteResult,
       };
 
     case Method.UPDATE:
       return {
         ...state,
-        postResult: initialState.postResult,
-        updateResult: action.payload.updateResult,
+        postRoleResult: initialState.postRoleResult,
+        updateRoleResult: action.payload.updateResult,
       };
     case Method.RESET:
       return {

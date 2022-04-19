@@ -7,8 +7,9 @@ import {
   TextField,
   Zoom,
   Stack,
+  Autocomplete,
 } from "@mui/material";
-import { useEffect, useState, FormEvent, FC } from "react";
+import { useEffect, useState, FormEvent, FC, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../state";
 import {
@@ -22,6 +23,18 @@ import {
 } from "../../state/actions-types/responses.types";
 import { EditForm } from "../../utilities/interface";
 
+interface Department {
+  dept_id: number | null;
+  name: string;
+}
+
+export interface RoleBody {
+  id: number | null;
+  role_name: string;
+  role_code: string;
+  department: Department;
+}
+
 export interface EmployeeBody {
   id: number | null;
   full_name: string;
@@ -30,7 +43,7 @@ export interface EmployeeBody {
   mobile_no: string;
   age: number;
   npwp: string;
-  role: string;
+  role: RoleBody;
 }
 
 const initialBody: EmployeeBody = {
@@ -41,17 +54,23 @@ const initialBody: EmployeeBody = {
   mobile_no: "",
   age: 22,
   npwp: "",
-  role: "",
+  role: {
+    id: null,
+    role_name: "",
+    role_code: "",
+    department: { name: "", dept_id: null },
+  },
 };
 
 const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   const dispatch = useDispatch();
-  const { postResult, updateResult } = useSelector(
+  const { postEmployeeResult, updateEmployeeResult } = useSelector(
     (state: State) => state.employee
   );
-
+  const { getRoleResult } = useSelector((state: State) => state.role);
   // Initial Form State
   const [body, setBody] = useState<EmployeeBody>(initialBody);
+  const [role, setRole] = useState([]);
   const [alert, setAlert] = useState({
     open: false,
     color: "success",
@@ -59,25 +78,40 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   });
 
   useEffect(() => {
-    console.log(postResult)
-    if (postResult.status === StatusCode.SUCCESS) {
-      setAlert({ open: true, color: "success", text: postResult.message });
-      setBody(postResult.data as EmployeeBody);
-      dispatch(getRole());
-    } else if (updateResult.status === StatusCode.SUCCESS) {
-      setAlert({ open: true, color: "success", text: updateResult.message });
-      setBody(updateResult.data as EmployeeBody);
-      dispatch(getRole());
+    console.log(postEmployeeResult)
+    if (postEmployeeResult.status === StatusCode.SUCCESS) {
+      setAlert({
+        open: true,
+        color: "success",
+        text: postEmployeeResult.message,
+      });
+      setBody(postEmployeeResult.data as unknown as EmployeeBody);
+    } else if (updateEmployeeResult.status === StatusCode.SUCCESS) {
+      setAlert({
+        open: true,
+        color: "success",
+        text: updateEmployeeResult.message,
+      });
+      setBody(updateEmployeeResult.data as unknown as EmployeeBody);
     } else if (
-      updateResult.status === StatusCode.ERROR ||
-      postResult.status === StatusCode.ERROR
+      updateEmployeeResult.status === StatusCode.ERROR ||
+      postEmployeeResult.status === StatusCode.ERROR
     ) {
       setAlert({ open: true, color: "danger", text: StatusMessage.ERROR });
     }
     setTimeout(() => {
-      setAlert({ open:false, color:"success", text:"Reloading" })
+      setAlert({ open: false, color: "success", text: "Reloading" });
     }, 3000);
-  }, [postResult, updateResult, dispatch]);
+  }, [postEmployeeResult, updateEmployeeResult, dispatch]);
+
+  const rerender = useCallback(() => {
+    dispatch(getRole());
+  }, [dispatch]);
+
+  useEffect(() => {
+    //   Get Data On Mounts
+    rerender();
+  }, [rerender]);
 
   useEffect(() => {
     if (form.edit) {
@@ -97,12 +131,24 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
       data: body,
     };
     changeFormStatus(submit);
+    console.log(body)
   };
 
   const handleEdit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateEmployee(body));
   };
+
+  const roleData = [
+    {
+      id: 1,
+      role_name: "TRUE",
+      role_code: "true",
+      department: { dept_id: 1, name: "DEP" },
+    },
+  ];
+
+  console.log(getRoleResult.data, "ROLE RESULT");
 
   const handleChange = (
     e: FormEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -122,6 +168,33 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
       data: initialBody,
     };
     changeFormStatus(clear);
+  };
+
+  const autoChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    value: any
+  ) => {
+    if (value !== null) {
+      setBody({
+        ...body,
+        role: {
+          id: value!.id,
+          role_name: value!.role_name,
+          role_code: value!.role_code,
+          department: value!.department,
+        },
+      });
+    } else {
+      setBody({
+        ...body,
+        role: {
+          id: null,
+          role_name: "",
+          role_code: "",
+          department: { name: "", dept_id: null },
+        },
+      });
+    }
   };
 
   return (
@@ -229,19 +302,36 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
             />
           </Grid>
           <Grid item md={12}>
-            <TextField
-              fullWidth
-              value={body.role}
-              label="Role"
-              id="role"
-              name="role"
-              placeholder="Role"
-              size="small"
-              type="text"
-              InputLabelProps={{
-                shrink: true,
+            <Autocomplete
+              options={
+                getRoleResult.data ? (getRoleResult.data as RoleBody[]) : []
+              }
+              getOptionLabel={(option: RoleBody) => option.role_name}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              onChange={(event, value) => autoChange(event, value)}
+              loading={getRoleResult.loading}
+              value={form.edit ? body.role : null}
+              loadingText="Please Wait"
+              renderOption={(props, option) => {
+                return (
+                  <li {...props} key={option.id}>
+                    {option.role_name}
+                  </li>
+                );
               }}
-              onChange={(e) => handleChange(e)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Department"
+                  placeholder="Select Department for this Role"
+                  size="small"
+                  type="text"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              )}
             />
           </Grid>
         </Grid>

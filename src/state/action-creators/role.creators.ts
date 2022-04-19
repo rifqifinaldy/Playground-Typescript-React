@@ -195,7 +195,7 @@ export const updateRole = (sendData: RoleBody) => {
           updateResult: {
             loading: false,
             method: Method.UPDATE,
-            data: {},
+            data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
           },

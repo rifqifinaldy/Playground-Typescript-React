@@ -4,6 +4,7 @@ import {
   GridRowId,
   GridRowParams,
   GridToolbar,
+  GridValueGetterParams,
 } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../state";
@@ -34,7 +35,7 @@ const ViewEmployee: FC<{
   const [dataID, setDataID] = useState<number | string | null>(null);
 
   // Redux State
-  const { getResult } = useSelector((state: State) => state.employee);
+  const { getEmployeeResult } = useSelector((state: State) => state.employee);
 
   const rerender = useCallback(() => {
     dispatch(getEmployee());
@@ -49,15 +50,18 @@ const ViewEmployee: FC<{
     [dispatch, dataID, rerender]
   );
 
-  const handleEdit = useCallback((e: SyntheticEvent, row: GridRowId) => {
-    let edit = {
-      e: e,
-      tabIndex: 0,
-      edit: true,
-      data: row,
-    };
-    changeFormStatus(edit);
-  }, [changeFormStatus]);
+  const handleEdit = useCallback(
+    (e: SyntheticEvent, row: GridRowId) => {
+      let edit = {
+        e: e,
+        tabIndex: 0,
+        edit: true,
+        data: row,
+      };
+      changeFormStatus(edit);
+    },
+    [changeFormStatus]
+  );
 
   useEffect(() => {
     //   Get Data On Mounts
@@ -80,7 +84,15 @@ const ViewEmployee: FC<{
     { field: "full_name", type: "string", headerName: "Full Name", flex: 1 },
     { field: "age", type: "string", headerName: "Age", width: 100 },
     { field: "address", type: "string", headerName: "Address", flex: 1 },
-    { field: "role", type: "string", headerName: "Role", flex: 1 },
+    {
+      field: "role",
+      type: "string",
+      headerName: "Role",
+      flex: 1,
+      valueGetter: (params: GridValueGetterParams) => {
+        return params.row.role.role_name;
+      },
+    },
     {
       field: "actions",
       headerName: "Action",
@@ -136,16 +148,19 @@ const ViewEmployee: FC<{
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         rowsPerPageOptions={[7, 14, 21]}
         components={{
-          NoRowsOverlay: getResult.loading
+          NoRowsOverlay: getEmployeeResult.loading
             ? LoadingOverlay
-            : getResult.status === StatusCode.ERROR
+            : getEmployeeResult.status === StatusCode.ERROR
             ? ErrorOverlay
-            : getResult.data instanceof Array && getResult.data.length === 0
+            : getEmployeeResult.data instanceof Array &&
+              getEmployeeResult.data.length === 0
             ? NoDataOverlay
             : LoadingOverlay,
           Toolbar: GridToolbar,
         }}
-        rows={getResult.data instanceof Array ? getResult.data : []}
+        rows={
+          getEmployeeResult.data instanceof Array ? getEmployeeResult.data : []
+        }
         columns={columns}
       />
     </Paper>

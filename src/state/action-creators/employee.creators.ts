@@ -198,7 +198,7 @@ export const updateEmployee = (sendData: EmployeeBody) => {
           updateResult: {
             loading: false,
             method: Method.UPDATE,
-            data: {},
+            data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
           },

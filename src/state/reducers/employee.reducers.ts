@@ -2,10 +2,23 @@ import { ResponsesAction } from "../actions/responses.action";
 import { Method, response, Result } from "../actions-types/responses.types";
 
 const initialState: response = {
-  getResult: {} as Result,
-  postResult: {} as Result,
-  updateResult: {} as Result,
-  deleteResult: {} as Result,
+  getEmployeeResult: {
+    method: "GET",
+    loading: false,
+    status: 0,
+    message: "",
+    data: [
+      {
+        id: 1,
+        role_name: "true",
+        role_code: "true",
+        department: { dept_id: 1, name: "DEP" },
+      },
+    ],
+  } as Result,
+  postEmployeeResult: {} as Result,
+  updateEmployeeResult: {} as Result,
+  deleteEmployeeResult: {} as Result,
 };
 
 const employeeReducers = (state = initialState, action: ResponsesAction) => {
@@ -13,23 +26,23 @@ const employeeReducers = (state = initialState, action: ResponsesAction) => {
     case Method.GET:
       return {
         ...state,
-        getResult: action.payload.getResult,
+        getEmployeeResult: action.payload.getResult,
       };
     case Method.POST:
       return {
         ...state,
-        postResult: action.payload.postResult,
+        postEmployeeResult: action.payload.postResult,
       };
     case Method.DELETE:
       return {
         ...state,
-        deleteResult: action.payload.deleteResult,
+        deleteEmployeeResult: action.payload.deleteResult,
       };
 
     case Method.UPDATE:
       return {
         ...state,
-        updateResult: action.payload.updateResult,
+        updateEmployeeResult: action.payload.updateResult,
       };
     case Method.RESET:
       return {
