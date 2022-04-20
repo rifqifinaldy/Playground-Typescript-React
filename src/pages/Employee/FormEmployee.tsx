@@ -16,65 +16,21 @@ import { useEffect, useState, FormEvent, FC, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { State } from "../../state";
-import {
-  postEmployee,
-  resetEmployee,
-  updateEmployee,
-} from "../../state/action-creators/employee.creators";
-import { getRole } from "../../state/action-creators/role.creators";
-import {
-  StatusCode,
-  StatusMessage,
-} from "../../state/actions-types/responses.types";
-import { EditForm } from "../../utilities/interface";
+import { postEmployee, resetEmployee, updateEmployee } from "../../state/Employee/employee.action.creators";
+import { employeeBody, IEmployeeBody } from "../../state/Employee/employee.body";
+import { getRole } from "../../state/Role/role.action.creators";
+import { IRoleBody } from "../../state/Role/role.body";
+import { StatusCode, StatusMessage } from "../../utilities/enum/response.status";
+import { IEditForm } from "../../utilities/interfaces/form.control.props";
 
-interface Department {
-  dept_id: number | null;
-  name: string;
-}
-
-export interface RoleBody {
-  id: number | null;
-  role_name: string;
-  role_code: string;
-  department: Department;
-}
-
-export interface EmployeeBody {
-  id: number | null;
-  full_name: string;
-  employee_code: string;
-  address: string;
-  mobile_no: string;
-  age: number;
-  npwp: string;
-  role: RoleBody;
-}
-
-const initialBody: EmployeeBody = {
-  id: null,
-  full_name: "",
-  employee_code: "",
-  address: "",
-  mobile_no: "",
-  age: 22,
-  npwp: "",
-  role: {
-    id: null,
-    role_name: "",
-    role_code: "",
-    department: { name: "", dept_id: null },
-  },
-};
-
-const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
+const FormEmployee: FC<IEditForm> = ({ form, changeFormStatus }) => {
   const dispatch = useDispatch();
   const { postEmployeeResult, updateEmployeeResult } = useSelector(
     (state: State) => state.employee
   );
-  const { postRoleResult, getRoleResult } = useSelector((state: State) => state.role);
+  const { getRoleResult } = useSelector((state: State) => state.role);
   // Initial Form State
-  const [body, setBody] = useState<EmployeeBody>(initialBody);
+  const [body, setBody] = useState<IEmployeeBody>(employeeBody);
   const [alert, setAlert] = useState({
     open: false,
     color: "success",
@@ -82,7 +38,6 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   });
 
   useEffect(() => {
-    console.log(postRoleResult, "ROLE RESULT")
     console.log(postEmployeeResult, "EMP Result")
     if (postEmployeeResult.status === StatusCode.SUCCESS) {
       setAlert({
@@ -90,14 +45,14 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
         color: "success",
         text: postEmployeeResult.message,
       });
-      setBody(postEmployeeResult.data as unknown as EmployeeBody);
+      setBody(postEmployeeResult.data as unknown as IEmployeeBody);
     } else if (updateEmployeeResult.status === StatusCode.SUCCESS) {
       setAlert({
         open: true,
         color: "success",
         text: updateEmployeeResult.message,
       });
-      setBody(updateEmployeeResult.data as unknown as EmployeeBody);
+      setBody(updateEmployeeResult.data as unknown as IEmployeeBody);
     } else if (
       updateEmployeeResult.status === StatusCode.ERROR ||
       postEmployeeResult.status === StatusCode.ERROR
@@ -117,16 +72,15 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
     //   Get Data On Mounts
     rerender();
     return () => {
-      console.log("LEaving Emp Component")
       dispatch(resetEmployee())
     }
   }, [rerender, dispatch]);
   
   useEffect(() => {
     if (form.edit) {
-      setBody(form.data as EmployeeBody);
+      setBody(form.data as IEmployeeBody);
     } else {
-      setBody(initialBody);
+      setBody(employeeBody);
     }
   }, [form]);
 
@@ -166,7 +120,7 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
       e: e,
       tabIndex: 0,
       edit: false,
-      data: initialBody,
+      data: employeeBody,
     };
     changeFormStatus(clear);
   };
@@ -313,9 +267,9 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
           <Grid item md={6}>
             <Autocomplete
               options={
-                getRoleResult.data ? (getRoleResult.data as RoleBody[]) : []
+                getRoleResult.data ? (getRoleResult.data as IRoleBody[]) : []
               }
-              getOptionLabel={(option: RoleBody) => option.role_name}
+              getOptionLabel={(option: IRoleBody) => option.role_name}
               isOptionEqualToValue={(option, value) => option.id === value.id}
               onChange={(event, value) => autoChange(event, value)}
               loading={getRoleResult.loading}

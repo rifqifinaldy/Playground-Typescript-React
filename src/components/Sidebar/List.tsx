@@ -5,7 +5,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { SidebarMenuSX, SidebarMenu, SubMenu } from "./list.style";
 import { Link, NavLink } from "react-router-dom";
-import { hasChildren, icons, sidebarData, NavigationItem } from "./list.config";
+import { hasChildren, icons, sidebarData, ISidebarItem } from "./list.config";
 import { FC, useState } from "react";
 import {
   Avatar,
@@ -70,7 +70,7 @@ export const SidebarNavMain: FC = () => {
 };
 
 const MasterSidebar: FC<{
-  item: NavigationItem;
+  item: ISidebarItem;
   selectedIndex: number;
   handleActive: (activeMenu: ActiveMenu) => void;
 }> = ({ item, selectedIndex, handleActive }) => {
@@ -87,7 +87,7 @@ const MasterSidebar: FC<{
 };
 
 const MenuSidebar: FC<{
-  item: NavigationItem;
+  item: ISidebarItem;
   selectedIndex: number;
   handleActive: (activeMenu: ActiveMenu) => void;
 }> = ({ item, selectedIndex, handleActive }) => {
@@ -104,7 +104,7 @@ const MenuSidebar: FC<{
 };
 
 const SingleItem: FC<{
-  item: NavigationItem;
+  item: ISidebarItem;
   selectedIndex: number;
   handleActive: (activeMenu: ActiveMenu) => void;
 }> = ({ item, handleActive, selectedIndex }) => {
@@ -128,7 +128,7 @@ const SingleItem: FC<{
 };
 
 const MultiItem: FC<{
-  item: NavigationItem;
+  item: ISidebarItem;
   selectedIndex: number;
   handleActive: (activeMenu: ActiveMenu) => void;
 }> = ({ item, handleActive, selectedIndex }) => {

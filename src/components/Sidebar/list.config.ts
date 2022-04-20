@@ -24,23 +24,23 @@ export const icons = {
   SafetyDivider
 };
 
-export interface NavigationSubItem {
+export interface ISidebarSubItem {
   id: number;
   text:string;
   icon: keyof typeof icons;
   target: string;
 }
 
-export interface NavigationItem {
+export interface ISidebarItem {
   id: number
   text: string;
   icon: keyof typeof icons;
   target: string;
   master: number;
-  items: NavigationSubItem[];
+  items: ISidebarSubItem[];
 }
 
-export const sidebarData: NavigationItem[] = [
+export const sidebarData: ISidebarItem[] = [
   {
     id: 0,
     text: "Dashboard",
@@ -106,7 +106,7 @@ export const sidebarData: NavigationItem[] = [
 
 // CHECK ITEM KOSONG APA GAK
 
-export function hasChildren(item:NavigationItem) {
+export function hasChildren(item:ISidebarItem) {
   const { items: children } = item;
 
   if (children === undefined) {

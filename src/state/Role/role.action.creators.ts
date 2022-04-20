@@ -1,22 +1,19 @@
 import { Dispatch } from "redux";
 import axios from "axios";
-import { API_URL } from "../../utilities/utilities";
-import { ResponsesAction } from "../actions/responses.action";
-import {
-  Method,
-  StatusCode,
-  StatusMessage,
-} from "../actions-types/responses.types";
-import { RoleBody } from "../../pages/Role/FormRole";
+import { API_URL } from "../../utilities";
+import { RoleAction } from "./role.action.types";
+import { RoleType } from "./role.types";
+import { StatusCode, StatusMessage } from "../../utilities/enum/response.status";
+import { IRoleBody } from "./role.body";
 
 export const getRole = () => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+  return async (dispatch: Dispatch<RoleAction>) => {
     dispatch({
-      type: Method.GET,
+      type: RoleType.GET,
       payload: {
         getResult: {
           loading: true,
-          method: Method.GET,
+          method: RoleType.GET,
           data: [],
           status: 0,
           message: "Loading",
@@ -27,11 +24,11 @@ export const getRole = () => {
       const { data } = await axios.get(API_URL + "role");
       const response = data;
       dispatch({
-        type: Method.GET,
+        type: RoleType.GET,
         payload: {
           getResult: {
             loading: false,
-            method: Method.GET,
+            method: RoleType.GET,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.GET,
@@ -40,11 +37,11 @@ export const getRole = () => {
       });
     } catch (error) {
       dispatch({
-        type: Method.GET,
+        type: RoleType.GET,
         payload: {
           getResult: {
             loading: false,
-            method: Method.GET,
+            method: RoleType.GET,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
@@ -56,13 +53,13 @@ export const getRole = () => {
 };
 
 export const postRole = (sendData: {}) => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+  return async (dispatch: Dispatch<RoleAction>) => {
     dispatch({
-      type: Method.POST,
+      type: RoleType.POST,
       payload: {
         postResult: {
           loading: true,
-          method: Method.POST,
+          method: RoleType.POST,
           data: [],
           status: 0,
           message: "Loading",
@@ -73,11 +70,11 @@ export const postRole = (sendData: {}) => {
       const { data } = await axios.post(API_URL + "role", sendData);
       const response = data;
       dispatch({
-        type: Method.POST,
+        type: RoleType.POST,
         payload: {
           postResult: {
             loading: false,
-            method: Method.POST,
+            method: RoleType.POST,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.POST,
@@ -86,11 +83,11 @@ export const postRole = (sendData: {}) => {
       });
     } catch (error) {
       dispatch({
-        type: Method.POST,
+        type: RoleType.POST,
         payload: {
           postResult: {
             loading: false,
-            method: Method.POST,
+            method: RoleType.POST,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
@@ -102,21 +99,21 @@ export const postRole = (sendData: {}) => {
 };
 
 // RESET
-export const resetRole = () => async (dispatch: Dispatch<ResponsesAction>) => {
+export const resetRole = () => async (dispatch: Dispatch<RoleAction>) => {
   dispatch({
-    type: Method.RESET,
+    type: RoleType.RESET,
   });
 };
 
 // Delete
 export const deleteRole = (id: string | number | null) => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+  return async (dispatch: Dispatch<RoleAction>) => {
     dispatch({
-      type: Method.DELETE,
+      type: RoleType.DELETE,
       payload: {
         deleteResult: {
           loading: true,
-          method: Method.DELETE,
+          method: RoleType.DELETE,
           data: [],
           status: 0,
           message: "Loading",
@@ -127,11 +124,11 @@ export const deleteRole = (id: string | number | null) => {
       const { data } = await axios.delete(API_URL + "role/" + id);
       const response = data;
       dispatch({
-        type: Method.DELETE,
+        type: RoleType.DELETE,
         payload: {
           deleteResult: {
             loading: false,
-            method: Method.DELETE,
+            method: RoleType.DELETE,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.DELETE,
@@ -140,11 +137,11 @@ export const deleteRole = (id: string | number | null) => {
       });
     } catch (error) {
       dispatch({
-        type: Method.DELETE,
+        type: RoleType.DELETE,
         payload: {
           deleteResult: {
             loading: false,
-            method: Method.DELETE,
+            method: RoleType.DELETE,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
@@ -156,14 +153,14 @@ export const deleteRole = (id: string | number | null) => {
 };
 
 // Update
-export const updateRole = (sendData: RoleBody) => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+export const updateRole = (sendData: IRoleBody) => {
+  return async (dispatch: Dispatch<RoleAction>) => {
     dispatch({
-      type: Method.UPDATE,
+      type: RoleType.UPDATE,
       payload: {
         updateResult: {
           loading: true,
-          method: Method.UPDATE,
+          method: RoleType.UPDATE,
           data: [],
           status: 0,
           message: "Loading",
@@ -177,11 +174,11 @@ export const updateRole = (sendData: RoleBody) => {
       );
       const response = data;
       dispatch({
-        type: Method.UPDATE,
+        type: RoleType.UPDATE,
         payload: {
           updateResult: {
             loading: false,
-            method: Method.UPDATE,
+            method: RoleType.UPDATE,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.UPDATE,
@@ -190,11 +187,11 @@ export const updateRole = (sendData: RoleBody) => {
       });
     } catch (error) {
       dispatch({
-        type: Method.UPDATE,
+        type: RoleType.UPDATE,
         payload: {
           updateResult: {
             loading: false,
-            method: Method.UPDATE,
+            method: RoleType.UPDATE,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,

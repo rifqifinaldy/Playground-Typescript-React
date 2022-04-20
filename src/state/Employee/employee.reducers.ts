@@ -1,5 +1,6 @@
-import { ResponsesAction } from "../actions/responses.action";
-import { Method, response, Result } from "../actions-types/responses.types";
+import { response, Result } from "../../utilities/interfaces/responses";
+import { EmployeeAction } from "./employee.action.types";
+import { EmployeeType } from "./employee.types";
 
 const initialState: response = {
   getEmployeeResult: {} as Result,
@@ -8,33 +9,33 @@ const initialState: response = {
   deleteEmployeeResult: {} as Result,
 };
 
-const employeeReducers = (state = initialState, action: ResponsesAction) => {
+const employeeReducers = (state = initialState, action: EmployeeAction) => {
   switch (action.type) {
-    case Method.GET:
+    case EmployeeType.GET:
       return {
         ...state,
         getEmployeeResult: action.payload.getResult,
         updateEmployeeResult: initialState.updateEmployeeResult,
       };
-    case Method.POST:
+    case EmployeeType.POST:
       return {
         ...state,
         postEmployeeResult: action.payload.postResult,
         updateEmployeeResult: initialState.updateEmployeeResult,
       };
-    case Method.DELETE:
+    case EmployeeType.DELETE:
       return {
         ...state,
         deleteEmployeeResult: action.payload.deleteResult,
       };
 
-    case Method.UPDATE:
+    case EmployeeType.UPDATE:
       return {
         ...state,
         updateEmployeeResult: action.payload.updateResult,
         postEmployeeResult: initialState.postEmployeeResult,
       };
-    case Method.RESET:
+    case EmployeeType.RESET:
       return {
         ...initialState,
       };

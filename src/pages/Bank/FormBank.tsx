@@ -18,24 +18,26 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../state";
 import {
-  postBanking,
   getBanking,
-} from "../../state/action-creators/banking.creators";
-import { currency, today } from "../../utilities/utilities";
-
+  postBanking,
+  resetBanking,
+} from "../../state/Bank/banking.action.creators";
+import { today } from "../../utilities";
 import {
   StatusCode,
   StatusMessage,
-} from "../../state/actions-types/responses.types";
+} from "../../utilities/enum/response.status";
+import { currency } from "../../utilities/tools/format.currency";
 
-interface Banking {
+interface IBanking {
   date: Date;
-  activity: string;
+  method: string;
   amount: number;
 }
 
 const FormBank = () => {
-  const [activity, setActivity] = useState<string>("deposit");
+  const [method, setMethod] = useState<string>("deposit");
+  const [balance, setBalance] = useState<number>(0);
   const [amount, setAmount] = useState<string>("0");
   const [alert, setAlert] = useState({
     open: false,
@@ -45,25 +47,20 @@ const FormBank = () => {
 
   const dispatch = useDispatch();
 
-  // const { depositMoney, withdrawMoney, bankrupt } = bindActionCreators(
-  //   bankCreators,
-  //   dispatch
-  // );
-
   const { postBankResult, getBankResult } = useSelector(
     (state: State) => state.banking
   );
 
-  const handleActivity = (e: SelectChangeEvent) => {
-    setActivity(e.target.value);
+  const handleMethod = (e: SelectChangeEvent) => {
+    setMethod(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     let newAmount: number = parseFloat(amount);
-    let sendData: Banking = {
+    let sendData: IBanking = {
       date: today,
-      amount: activity === "withdraw" ? newAmount * -1 : newAmount,
-      activity: activity,
+      amount: method === "withdraw" ? newAmount * -1 : newAmount,
+      method: method,
     };
     e.preventDefault();
     dispatch(postBanking(sendData));
@@ -72,8 +69,23 @@ const FormBank = () => {
   const handleReset = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setAmount("0");
-    setActivity("deposit");
+    setMethod("deposit");
   };
+
+  useEffect(() => {
+    if (getBankResult.data) {
+      let tmpBalance = Object.values(
+        getBankResult.data as unknown as IBanking
+      ).reduce((r, { amount }) => r + amount, 0);
+      setBalance(tmpBalance);
+    }
+  }, [getBankResult, balance]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetBanking())
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getBanking());
@@ -97,21 +109,21 @@ const FormBank = () => {
         Your Account Balance
       </Typography>
       <Typography variant="h2" align="center">
-        {currency.format(5000)}
+        {currency.format(balance)}
       </Typography>
       <hr />
       <form onSubmit={(e) => handleSubmit(e)}>
         <Grid px={1} py={1} container spacing={2}>
           <Grid item md={4}>
             <FormControl fullWidth>
-              <InputLabel id="activity">Activity</InputLabel>
+              <InputLabel id="method">Activity</InputLabel>
               <Select
                 fullWidth
-                labelId="activity"
-                id="activity"
-                value={activity}
+                labelId="method"
+                id="method"
+                value={method}
                 label="Activity"
-                onChange={handleActivity}
+                onChange={handleMethod}
                 size="small"
                 required
               >
@@ -145,7 +157,7 @@ const FormBank = () => {
           }}
         >
           <Grid item md={12}>
-            <Divider>{capitalize(activity)}</Divider>
+            <Divider>{capitalize(method)}</Divider>
           </Grid>
           <Grid item md={3} xs={12}>
             <Stack spacing={2} direction="row">
@@ -164,7 +176,7 @@ const FormBank = () => {
                 variant="contained"
                 color="info"
               >
-                Reset
+                Clear
               </Button>
             </Stack>
           </Grid>

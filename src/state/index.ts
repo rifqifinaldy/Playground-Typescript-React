@@ -1,6 +1,5 @@
-export * as bankCreators from "./action-creators/bank.creators"
-export * as employeeCreators from "./action-creators/employee.creators"
-export * as roleCreators from "./action-creators/role.creators"
-export * as banking from "./action-creators/banking.creators"
+export * as employeeCreators from "./Employee/employee.action.creators"
+export * as roleCreators from "./Role/role.action.creators"
+export * as banking from "./Bank/banking.action.creators"
 export * from "./store";
 export * from "./reducers/index"

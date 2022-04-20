@@ -1,22 +1,22 @@
 import { Dispatch } from "redux";
 import axios from "axios";
-import { API_URL } from "../../utilities/utilities";
-import { ResponsesAction } from "../actions/responses.action";
+import { API_URL } from "../../utilities";
+import { BankingAction } from "./banking.action.types";
+import { BankingType } from "./banking.types";
 import {
-  Method,
   StatusCode,
   StatusMessage,
-} from "../actions-types/responses.types";
+} from "../../utilities/enum/response.status";
 
 // GET
 export const getBanking = () => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+  return async (dispatch: Dispatch<BankingAction>) => {
     dispatch({
-      type: Method.GET,
+      type: BankingType.GET,
       payload: {
         getResult: {
           loading: true,
-          method: Method.GET,
+          method: BankingType.GET,
           data: [],
           status: 0,
           message: "Loading",
@@ -27,11 +27,11 @@ export const getBanking = () => {
       const { data } = await axios.get(API_URL + "bank");
       const response = data;
       dispatch({
-        type: Method.GET,
+        type: BankingType.GET,
         payload: {
           getResult: {
             loading: false,
-            method: Method.GET,
+            method: BankingType.GET,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.GET,
@@ -40,11 +40,11 @@ export const getBanking = () => {
       });
     } catch (error) {
       dispatch({
-        type: Method.GET,
+        type: BankingType.GET,
         payload: {
           getResult: {
             loading: false,
-            method: Method.GET,
+            method: BankingType.GET,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
@@ -57,13 +57,13 @@ export const getBanking = () => {
 
 // POST
 export const postBanking = (sendData: {}) => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+  return async (dispatch: Dispatch<BankingAction>) => {
     dispatch({
-      type: Method.POST,
+      type: BankingType.POST,
       payload: {
         postResult: {
           loading: true,
-          method: Method.POST,
+          method: BankingType.POST,
           data: [],
           status: 0,
           message: "Loading",
@@ -74,11 +74,11 @@ export const postBanking = (sendData: {}) => {
       const { data } = await axios.post(API_URL + "Bank", sendData);
       const response = data;
       dispatch({
-        type: Method.POST,
+        type: BankingType.POST,
         payload: {
           postResult: {
             loading: false,
-            method: Method.POST,
+            method: BankingType.POST,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.POST,
@@ -87,11 +87,11 @@ export const postBanking = (sendData: {}) => {
       });
     } catch (error) {
       dispatch({
-        type: Method.POST,
+        type: BankingType.POST,
         payload: {
           postResult: {
             loading: false,
-            method: Method.POST,
+            method: BankingType.POST,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
@@ -103,9 +103,8 @@ export const postBanking = (sendData: {}) => {
 };
 
 // RESET
-export const resetBanking =
-  () => async (dispatch: Dispatch<ResponsesAction>) => {
-    dispatch({
-      type: Method.RESET,
-    });
-  };
+export const resetBanking = () => async (dispatch: Dispatch<BankingAction>) => {
+  dispatch({
+    type: BankingType.RESET,
+  });
+};

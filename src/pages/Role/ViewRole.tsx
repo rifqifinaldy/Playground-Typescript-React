@@ -18,13 +18,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, Paper } from "@mui/material";
 import { Modal } from "../../components/Modal/Modal";
-import { FormStatus } from "../../utilities/interface";
-import { deleteRole, getRole } from "../../state/action-creators/role.creators";
-import { StatusCode } from "../../state/actions-types/responses.types";
+import { IFormControl } from "../../utilities/interfaces/form.control.props";
+import { deleteRole, getRole } from "../../state/Role/role.action.creators";
+import { StatusCode } from "../../utilities/enum/response.status";
 
 const ViewRole: FC<{
   update: boolean;
-  changeFormStatus: (formStatus: FormStatus) => void;
+  changeFormStatus: (formStatus: IFormControl) => void;
 }> = ({ update, changeFormStatus }) => {
   const { getRoleResult } = useSelector((state: State) => state.role);
   const dispatch = useDispatch();
@@ -140,7 +140,8 @@ const ViewRole: FC<{
             ? LoadingOverlay
             : getRoleResult.status === StatusCode.ERROR
             ? ErrorOverlay
-            : getRoleResult.data instanceof Array && getRoleResult.data.length === 0
+            : getRoleResult.data instanceof Array &&
+              getRoleResult.data.length === 0
             ? NoDataOverlay
             : LoadingOverlay,
           Toolbar: GridToolbar,

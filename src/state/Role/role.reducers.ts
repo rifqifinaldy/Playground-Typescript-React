@@ -1,39 +1,40 @@
-import { ResponsesAction } from "../actions/responses.action";
-import { Method, response, Result } from "../actions-types/responses.types";
+import { response, Result } from "../../utilities/interfaces/responses";
+import { RoleAction } from "./role.action.types";
+import { RoleType } from "./role.types";
 
 const initialState: response = {
   getRoleResult: {} as Result,
-  postRoleResult : {} as Result,
+  postRoleResult: {} as Result,
   updateRoleResult: {} as Result,
   deleteRoleResult: {} as Result,
 };
 
-const roleReducers = (state = initialState, action: ResponsesAction) => {
+const roleReducers = (state = initialState, action: RoleAction) => {
   switch (action.type) {
-    case Method.GET:
+    case RoleType.GET:
       return {
         ...state,
         getRoleResult: action.payload.getResult,
       };
-    case Method.POST:
+    case RoleType.POST:
       return {
         ...state,
         updateRoleResult: initialState.updateRoleResult,
-        postRoleResult: action.payload.postResult
+        postRoleResult: action.payload.postResult,
       };
-    case Method.DELETE:
+    case RoleType.DELETE:
       return {
         ...state,
         deleteRoleResult: action.payload.deleteResult,
       };
 
-    case Method.UPDATE:
+    case RoleType.UPDATE:
       return {
         ...state,
         postRoleResult: initialState.postRoleResult,
         updateRoleResult: action.payload.updateResult,
       };
-    case Method.RESET:
+    case RoleType.RESET:
       return {
         ...initialState,
       };

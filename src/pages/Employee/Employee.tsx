@@ -6,7 +6,7 @@ import PageTitle from "../../components/Title/PageTitle";
 import ViewEmployee from "./ViewEmployee";
 import FormEmployee from "./FormEmployee";
 import { PageName } from "../../components/Title/page.config";
-import { FormStatus } from "../../utilities/interface";
+import { IFormControl } from "../../utilities/interfaces/form.control.props";
 
 const Employee = () => {
   const [tab, setTab] = useState<number>(0);
@@ -23,7 +23,7 @@ const Employee = () => {
     });
   };
 
-  const changeFormStatus = (formStatus: FormStatus) => {
+  const changeFormStatus = (formStatus: IFormControl) => {
     setTab(formStatus.tabIndex);
     setForm({
       edit: formStatus.edit,

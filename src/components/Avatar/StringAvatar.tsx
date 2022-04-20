@@ -1,4 +1,5 @@
-import { stringToColor } from "../../utilities/utilities";
+import { stringToColor } from "../../utilities/tools/generate.colour";
+
 
 const StringAvatar = (name: string) => {
   return {

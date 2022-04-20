@@ -1,5 +1,6 @@
-import { ResponsesAction } from "../actions/responses.action";
-import { Method, response, Result } from "../actions-types/responses.types";
+import { BankingType } from "./banking.types";
+import { BankingAction } from "./banking.action.types";
+import { response, Result } from "../../utilities/interfaces/responses";
 
 const initialState: response = {
   getBankResult: {} as Result,
@@ -8,20 +9,20 @@ const initialState: response = {
   deleteBankResult: {} as Result,
 };
 
-const bankingReducers = (state = initialState, action: ResponsesAction) => {
+const bankingReducers = (state = initialState, action: BankingAction) => {
   switch (action.type) {
-    case Method.GET:
+    case BankingType.GET:
       return {
         ...state,
         getBankResult: action.payload.getResult,
       };
-    case Method.POST:
+    case BankingType.POST:
       return {
         ...state,
         updateBankResult: initialState.updateBankResult,
         postBankResult: action.payload.postResult,
       };
-    case Method.RESET:
+    case BankingType.RESET:
       return {
         ...initialState,
       };

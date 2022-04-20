@@ -3,13 +3,11 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Drawer } from "./sidebar.style";
-import { NavigationProps } from "../../utilities/interface";
+import { INavbarProps } from "../../utilities/interfaces/navbar.props";
 import { SidebarNavMain } from "./List";
-import {
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 
-const Sidebar: FC<NavigationProps> = ({ open, toggleDrawer }) => {
+const Sidebar: FC<INavbarProps> = ({ open, toggleDrawer }) => {
   return (
     <Drawer variant="permanent" open={open} elevation={3}>
       <Toolbar

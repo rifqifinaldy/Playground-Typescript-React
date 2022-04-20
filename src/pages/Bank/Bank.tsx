@@ -4,7 +4,6 @@ import { SyntheticEvent, useState } from "react";
 import TabPanel, { a11yProps } from "../../components/Tabs/Tabs";
 import { PageName } from "../../components/Title/page.config";
 import PageTitle from "../../components/Title/PageTitle";
-import { FormStatus } from "../../utilities/interface";
 import FormBank from "./FormBank";
 import ViewBank from "./ViewBank";
 

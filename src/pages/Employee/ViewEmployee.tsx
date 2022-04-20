@@ -18,16 +18,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, Paper } from "@mui/material";
 import { Modal } from "../../components/Modal/Modal";
-import { StatusCode } from "../../state/actions-types/responses.types";
-import { FormStatus } from "../../utilities/interface";
-import {
-  deleteEmployee,
-  getEmployee,
-  resetEmployee,
-} from "../../state/action-creators/employee.creators";
+import { IFormControl } from "../../utilities/interfaces/form.control.props";
+import { deleteEmployee, getEmployee } from "../../state/Employee/employee.action.creators";
+import { StatusCode } from "../../utilities/enum/response.status";
+
 
 const ViewEmployee: FC<{
-  changeFormStatus: (formStatus: FormStatus) => void;
+  changeFormStatus: (formStatus: IFormControl) => void;
 }> = ({ changeFormStatus }) => {
   const dispatch = useDispatch();
   const [pageSize, setPageSize] = useState<number>(7);

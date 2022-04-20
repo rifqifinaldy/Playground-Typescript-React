@@ -1,23 +1,23 @@
 import { Dispatch } from "redux";
 import axios from "axios";
-import { API_URL } from "../../utilities/utilities";
-import { EmployeeBody } from "../../pages/Employee/FormEmployee";
-import { ResponsesAction } from "../actions/responses.action";
+import { API_URL } from "../../utilities";
+import { EmployeeAction } from "./employee.action.types";
+import { EmployeeType } from "./employee.types";
 import {
-  Method,
   StatusCode,
   StatusMessage,
-} from "../actions-types/responses.types";
+} from "../../utilities/enum/response.status";
+import { IEmployeeBody } from "./employee.body";
 
 // GET METHOD
 export const getEmployee = () => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+  return async (dispatch: Dispatch<EmployeeAction>) => {
     dispatch({
-      type: Method.GET,
+      type: EmployeeType.GET,
       payload: {
         getResult: {
           loading: true,
-          method: Method.GET,
+          method: EmployeeType.GET,
           data: [],
           status: 0,
           message: "Loading",
@@ -28,11 +28,11 @@ export const getEmployee = () => {
       const { data } = await axios.get(API_URL + "employee");
       const response = data;
       dispatch({
-        type: Method.GET,
+        type: EmployeeType.GET,
         payload: {
           getResult: {
             loading: false,
-            method: Method.GET,
+            method: EmployeeType.GET,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.GET,
@@ -41,11 +41,11 @@ export const getEmployee = () => {
       });
     } catch (error) {
       dispatch({
-        type: Method.GET,
+        type: EmployeeType.GET,
         payload: {
           getResult: {
             loading: false,
-            method: Method.GET,
+            method: EmployeeType.GET,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
@@ -58,13 +58,13 @@ export const getEmployee = () => {
 
 // POST METHOD
 export const postEmployee = (sendData: {}) => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+  return async (dispatch: Dispatch<EmployeeAction>) => {
     dispatch({
-      type: Method.POST,
+      type: EmployeeType.POST,
       payload: {
         postResult: {
           loading: true,
-          method: Method.POST,
+          method: EmployeeType.POST,
           data: [],
           status: 0,
           message: "Loading",
@@ -75,11 +75,11 @@ export const postEmployee = (sendData: {}) => {
       const { data } = await axios.post(API_URL + "employee", sendData);
       const response = data;
       dispatch({
-        type: Method.POST,
+        type: EmployeeType.POST,
         payload: {
           postResult: {
             loading: false,
-            method: Method.POST,
+            method: EmployeeType.POST,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.POST,
@@ -88,11 +88,11 @@ export const postEmployee = (sendData: {}) => {
       });
     } catch (error) {
       dispatch({
-        type: Method.POST,
+        type: EmployeeType.POST,
         payload: {
           postResult: {
             loading: false,
-            method: Method.POST,
+            method: EmployeeType.POST,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
@@ -105,21 +105,21 @@ export const postEmployee = (sendData: {}) => {
 
 // RESET
 export const resetEmployee =
-  () => async (dispatch: Dispatch<ResponsesAction>) => {
+  () => async (dispatch: Dispatch<EmployeeAction>) => {
     dispatch({
-      type: Method.RESET,
+      type: EmployeeType.RESET,
     });
   };
 
-  // Delete
+// Delete
 export const deleteEmployee = (id: string | number | null) => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+  return async (dispatch: Dispatch<EmployeeAction>) => {
     dispatch({
-      type: Method.DELETE,
+      type: EmployeeType.DELETE,
       payload: {
         deleteResult: {
           loading: true,
-          method: Method.DELETE,
+          method: EmployeeType.DELETE,
           data: [],
           status: 0,
           message: "Loading",
@@ -130,11 +130,11 @@ export const deleteEmployee = (id: string | number | null) => {
       const { data } = await axios.delete(API_URL + "employee/" + id);
       const response = data;
       dispatch({
-        type: Method.DELETE,
+        type: EmployeeType.DELETE,
         payload: {
           deleteResult: {
             loading: false,
-            method: Method.DELETE,
+            method: EmployeeType.DELETE,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.DELETE,
@@ -143,11 +143,11 @@ export const deleteEmployee = (id: string | number | null) => {
       });
     } catch (error) {
       dispatch({
-        type: Method.DELETE,
+        type: EmployeeType.DELETE,
         payload: {
           deleteResult: {
             loading: false,
-            method: Method.DELETE,
+            method: EmployeeType.DELETE,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,
@@ -159,14 +159,14 @@ export const deleteEmployee = (id: string | number | null) => {
 };
 
 // Update
-export const updateEmployee = (sendData: EmployeeBody) => {
-  return async (dispatch: Dispatch<ResponsesAction>) => {
+export const updateEmployee = (sendData: IEmployeeBody) => {
+  return async (dispatch: Dispatch<EmployeeAction>) => {
     dispatch({
-      type: Method.UPDATE,
+      type: EmployeeType.UPDATE,
       payload: {
         updateResult: {
           loading: true,
-          method: Method.UPDATE,
+          method: EmployeeType.UPDATE,
           data: [],
           status: 0,
           message: "Loading",
@@ -180,11 +180,11 @@ export const updateEmployee = (sendData: EmployeeBody) => {
       );
       const response = data;
       dispatch({
-        type: Method.UPDATE,
+        type: EmployeeType.UPDATE,
         payload: {
           updateResult: {
             loading: false,
-            method: Method.UPDATE,
+            method: EmployeeType.UPDATE,
             data: response,
             status: StatusCode.SUCCESS,
             message: StatusMessage.UPDATE,
@@ -193,11 +193,11 @@ export const updateEmployee = (sendData: EmployeeBody) => {
       });
     } catch (error) {
       dispatch({
-        type: Method.UPDATE,
+        type: EmployeeType.UPDATE,
         payload: {
           updateResult: {
             loading: false,
-            method: Method.UPDATE,
+            method: EmployeeType.UPDATE,
             data: [],
             status: StatusCode.ERROR,
             message: StatusMessage.ERROR,

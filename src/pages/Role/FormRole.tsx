@@ -11,44 +11,20 @@ import {
 import { useEffect, useState, FormEvent, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../state";
-import {
-  postRole,
-  resetRole,
-  updateRole,
-} from "../../state/action-creators/role.creators";
-import {
-  StatusCode,
-  StatusMessage,
-} from "../../state/actions-types/responses.types";
-import { EditForm } from "../../utilities/interface";
+import { IDepartment } from "../../state/Department/department.body";
+import { postRole, resetRole, updateRole } from "../../state/Role/role.action.creators";
+import { IRoleBody, roleBody } from "../../state/Role/role.body";
+import { StatusCode, StatusMessage } from "../../utilities/enum/response.status";
+import { IEditForm } from "../../utilities/interfaces/form.control.props";
 
-interface Department {
-  dept_id: number | null;
-  name: string;
-}
-
-export interface RoleBody {
-  id: number | null;
-  role_name: string;
-  role_code: string;
-  department: Department;
-}
-
-const initialBody: RoleBody = {
-  id: null,
-  role_name: "",
-  role_code: "",
-  department: { name: "", dept_id: null },
-};
-
-const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
+const FormRole: FC<IEditForm> = ({ form, changeFormStatus }) => {
   const dispatch = useDispatch();
   const { postRoleResult, updateRoleResult } = useSelector(
     (state: State) => state.role
   );
 
   // Initial Form State
-  const [body, setBody] = useState<RoleBody>(initialBody);
+  const [body, setBody] = useState<IRoleBody>(roleBody);
   const [alert, setAlert] = useState({
     open: false,
     color: "success",
@@ -69,10 +45,10 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
     console.log(postRoleResult)
     if (postRoleResult.status === StatusCode.SUCCESS) {
       setAlert({ open: true, color: "success", text: postRoleResult.message });
-      setBody(postRoleResult.data as unknown as RoleBody);
+      setBody(postRoleResult.data as unknown as IRoleBody);
     } else if (updateRoleResult.status === StatusCode.SUCCESS) {
       setAlert({ open: true, color: "success", text: updateRoleResult.message });
-      setBody(updateRoleResult.data as unknown as RoleBody);
+      setBody(updateRoleResult.data as unknown as IRoleBody);
     } else if (
       updateRoleResult.status === StatusCode.ERROR ||
       postRoleResult.status === StatusCode.ERROR
@@ -108,9 +84,9 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   // Edit Function
   useEffect(() => {
     if (form.edit) {
-      setBody(form.data as RoleBody);
+      setBody(form.data as IRoleBody);
     } else {
-      setBody(initialBody);
+      setBody(roleBody);
     }
   }, [form]);
 
@@ -138,7 +114,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   
   const autoChange = (
     event: React.SyntheticEvent<Element, Event>,
-    value: Department | null
+    value: IDepartment | null
   ) => {
     if (value !== null) {
       setBody({
@@ -159,7 +135,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
       e: e,
       tabIndex: 0,
       edit: false,
-      data: initialBody,
+      data: roleBody,
     };
     changeFormStatus(clear);
   };
@@ -207,7 +183,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
           <Grid item md={6}>
             <Autocomplete
               options={departmentOpt}
-              getOptionLabel={(option: Department) => option.name}
+              getOptionLabel={(option: IDepartment) => option.name}
               isOptionEqualToValue={(option, value) =>
                 option.name === value.name
               }

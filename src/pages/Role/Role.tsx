@@ -3,9 +3,9 @@ import { PageName } from "../../components/Title/page.config";
 import PageTitle from "../../components/Title/PageTitle";
 import { SafetyDivider } from "@mui/icons-material";
 import { useState } from "react";
-import { FormStatus } from "../../utilities/interface";
 import ViewRole from "./ViewRole";
 import FormRole from "./FormRole";
+import { IFormControl } from "../../utilities/interfaces/form.control.props";
 
 const Role = () => {
   const [form, setForm] = useState({
@@ -15,7 +15,7 @@ const Role = () => {
 
   const [update, setUpdate] = useState(false);
 
-  const changeFormStatus = (formStatus: FormStatus) => {
+  const changeFormStatus = (formStatus: IFormControl) => {
     setUpdate(!update);
     setForm({
       edit: formStatus.edit,

@@ -3,9 +3,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import { AppBar } from "./navbar.style";
-import { NavigationProps } from "../../utilities/interface";
+import { INavbarProps } from "../../utilities/interfaces/navbar.props";
 import { ListItemIcon, Menu, MenuItem, MenuList } from "@mui/material";
-
 import {
   AccountCircle,
   Menu as MenuIcon,
@@ -13,9 +12,9 @@ import {
   LogoutRounded,
   Camera,
 } from "@mui/icons-material";
-import {PageName} from "../Title/page.config";
+import { PageName } from "../Title/page.config";
 
-const Navbar: FC<NavigationProps> = ({ open, toggleDrawer }) => {
+const Navbar: FC<INavbarProps> = ({ open, toggleDrawer }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
