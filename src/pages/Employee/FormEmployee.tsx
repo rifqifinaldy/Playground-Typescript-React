@@ -311,7 +311,7 @@ const FormEmployee: FC<IEditForm> = ({ form, changeFormStatus }) => {
           <Grid item md={12}>
             <Divider>
               <Typography>
-                {form.edit ? "Edit" : "Register"} This Employee
+                <small>{form.edit ? "Edit" : "Register"} This Employee </small>
               </Typography>
             </Divider>
           </Grid>

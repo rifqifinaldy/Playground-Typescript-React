@@ -118,7 +118,7 @@ const FormBank = () => {
         <Grid px={1} py={1} container spacing={2}>
           <Grid item md={4}>
             <FormControl fullWidth>
-              <InputLabel id="method">Activity</InputLabel>
+              <InputLabel id="method">Method</InputLabel>
               <Select
                 autoFocus={true}
                 fullWidth
@@ -160,7 +160,7 @@ const FormBank = () => {
           }}
         >
           <Grid item md={12}>
-            <Divider>{capitalize(method)}</Divider>
+            <small><Divider>{capitalize(method)}</Divider></small>
           </Grid>
           <Grid item md={3} xs={12}>
             <Stack spacing={2} direction="row">
