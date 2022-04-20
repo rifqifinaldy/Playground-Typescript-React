@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import { FC } from "react";
-import DashboardChildren from "./DashboardChildren";
 
 const Dashboard: FC = () => {
   return (

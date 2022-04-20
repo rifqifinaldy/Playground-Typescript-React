@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NumberFormatCustom } from "../../components/Inputs/NumberFormatter/NumberFormatter";
 import { State } from "../../state";
 import {
   getBanking,
@@ -32,13 +33,14 @@ import { currency } from "../../utilities/tools/format.currency";
 interface IBanking {
   date: Date;
   method: string;
-  amount: number;
+  amount: number | string;
 }
 
 const FormBank = () => {
   const [method, setMethod] = useState<string>("deposit");
   const [balance, setBalance] = useState<number>(0);
   const [amount, setAmount] = useState<string>("0");
+
   const [alert, setAlert] = useState({
     open: false,
     color: "success",
@@ -83,8 +85,8 @@ const FormBank = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(resetBanking())
-    }
+      dispatch(resetBanking());
+    };
   }, [dispatch]);
 
   useEffect(() => {
@@ -118,6 +120,7 @@ const FormBank = () => {
             <FormControl fullWidth>
               <InputLabel id="method">Activity</InputLabel>
               <Select
+                autoFocus={true}
                 fullWidth
                 labelId="method"
                 id="method"
@@ -135,14 +138,14 @@ const FormBank = () => {
           <Grid item md={8}>
             <TextField
               required
-              autoFocus={true}
-              name="balance"
-              placeholder="Input balance"
-              size="small"
               label="Amount"
               value={amount}
+              size="small"
               onChange={(e) => setAmount(e.target.value)}
-              type="number"
+              name="amount"
+              InputProps={{
+                inputComponent: NumberFormatCustom as any,
+              }}
               fullWidth
             />
           </Grid>

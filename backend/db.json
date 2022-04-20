@@ -153,6 +153,12 @@
       "amount": 1000,
       "method": "deposit",
       "id": 4
+    },
+    {
+      "date": "2022-04-20T16:42:22.514Z",
+      "amount": -500,
+      "method": "withdraw",
+      "id": 5
     }
   ]
 }
