@@ -8,12 +8,17 @@ import {
   Zoom,
   Stack,
   Autocomplete,
+  Typography,
+  FormHelperText,
+  InputAdornment,
 } from "@mui/material";
 import { useEffect, useState, FormEvent, FC, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { State } from "../../state";
 import {
   postEmployee,
+  resetEmployee,
   updateEmployee,
 } from "../../state/action-creators/employee.creators";
 import { getRole } from "../../state/action-creators/role.creators";
@@ -67,10 +72,9 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   const { postEmployeeResult, updateEmployeeResult } = useSelector(
     (state: State) => state.employee
   );
-  const { getRoleResult } = useSelector((state: State) => state.role);
+  const { postRoleResult, getRoleResult } = useSelector((state: State) => state.role);
   // Initial Form State
   const [body, setBody] = useState<EmployeeBody>(initialBody);
-  const [role, setRole] = useState([]);
   const [alert, setAlert] = useState({
     open: false,
     color: "success",
@@ -78,7 +82,8 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   });
 
   useEffect(() => {
-    console.log(postEmployeeResult)
+    console.log(postRoleResult, "ROLE RESULT")
+    console.log(postEmployeeResult, "EMP Result")
     if (postEmployeeResult.status === StatusCode.SUCCESS) {
       setAlert({
         open: true,
@@ -111,8 +116,12 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   useEffect(() => {
     //   Get Data On Mounts
     rerender();
-  }, [rerender]);
-
+    return () => {
+      console.log("LEaving Emp Component")
+      dispatch(resetEmployee())
+    }
+  }, [rerender, dispatch]);
+  
   useEffect(() => {
     if (form.edit) {
       setBody(form.data as EmployeeBody);
@@ -123,7 +132,9 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(postEmployee(body));
+    let tmpBody = body;
+    tmpBody.employee_code = body.role.role_code + "-" + body.employee_code;
+    dispatch(postEmployee(tmpBody));
     let submit = {
       e: e,
       tabIndex: 0,
@@ -131,24 +142,14 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
       data: body,
     };
     changeFormStatus(submit);
-    console.log(body)
   };
 
   const handleEdit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(updateEmployee(body));
+    let tmpBody = body;
+    tmpBody.employee_code = body.role.role_code + "-" + body.employee_code;
+    dispatch(updateEmployee(tmpBody));
   };
-
-  const roleData = [
-    {
-      id: 1,
-      role_name: "TRUE",
-      role_code: "true",
-      department: { dept_id: 1, name: "DEP" },
-    },
-  ];
-
-  console.log(getRoleResult.data, "ROLE RESULT");
 
   const handleChange = (
     e: FormEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -198,7 +199,7 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
   };
 
   return (
-    <Paper>
+    <Paper variant="outlined" sx={{ py: 2 }}>
       <form onSubmit={(e) => (form.edit ? handleEdit(e) : handleSubmit(e))}>
         <Grid px={1} py={1} container spacing={2}>
           <Grid item md={6}>
@@ -231,6 +232,13 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
               placeholder="Employee Code Not NPWP"
               size="small"
               type="text"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    {form.edit ? null : body.role.role_code + "-"}
+                  </InputAdornment>
+                ),
+              }}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -301,7 +309,8 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
               onChange={(e) => handleChange(e)}
             />
           </Grid>
-          <Grid item md={12}>
+          <Grid item md={6}></Grid>
+          <Grid item md={6}>
             <Autocomplete
               options={
                 getRoleResult.data ? (getRoleResult.data as RoleBody[]) : []
@@ -310,7 +319,7 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
               isOptionEqualToValue={(option, value) => option.id === value.id}
               onChange={(event, value) => autoChange(event, value)}
               loading={getRoleResult.loading}
-              value={form.edit ? body.role : null}
+              value={body.role.id !== null ? body.role : null}
               loadingText="Please Wait"
               renderOption={(props, option) => {
                 return (
@@ -322,8 +331,8 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Department"
-                  placeholder="Select Department for this Role"
+                  label="Role"
+                  placeholder="Select Role for this Employee"
                   size="small"
                   type="text"
                   fullWidth
@@ -333,13 +342,23 @@ const FormEmployee: FC<EditForm> = ({ form, changeFormStatus }) => {
                 />
               )}
             />
+            <FormHelperText>
+              <Link
+                to="/hr/role"
+                style={{ textDecoration: "none", color: "#131313" }}
+              >
+                Can't find role ? Create new Role
+              </Link>
+            </FormHelperText>
           </Grid>
         </Grid>
         {/* BUTTON WRAPPER */}
         <Grid container justifyContent="center" alignItems="center">
           <Grid item md={12}>
             <Divider>
-              <small>{form.edit ? "Edit" : "Register"} This Employee</small>
+              <Typography>
+                {form.edit ? "Edit" : "Register"} This Employee
+              </Typography>
             </Divider>
           </Grid>
           <Grid item md={3}>

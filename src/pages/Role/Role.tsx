@@ -2,7 +2,6 @@ import { Paper } from "@mui/material";
 import { PageName } from "../../components/Title/page.config";
 import PageTitle from "../../components/Title/PageTitle";
 import { SafetyDivider } from "@mui/icons-material";
-import { Box } from "@mui/system";
 import { useState } from "react";
 import { FormStatus } from "../../utilities/interface";
 import ViewRole from "./ViewRole";
@@ -25,12 +24,12 @@ const Role = () => {
   };
 
   return (
-    <Paper sx={{ my: 2, mx: 2, p: 1 }}>
+    <Paper sx={{ mx: 1, py: 1, px: 3 }}>
       <PageTitle title={<PageName />} icon={<SafetyDivider />} />
-      <Box sx={{ width: "100%" }}>
+      <Paper style={{ width: "100%" }} variant="outlined">
         <FormRole form={form} changeFormStatus={changeFormStatus} />
         <ViewRole update={update} changeFormStatus={changeFormStatus} />
-      </Box>
+      </Paper>
     </Paper>
   );
 };

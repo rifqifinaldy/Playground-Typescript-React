@@ -29,14 +29,6 @@ export interface Result {
   message: StatusMessage | string;
 }
 
-export const inititalResult = {
-  loading : false,
-  method : "",
-  data: [],
-  status: 0,
-  message: "Inititate"
-}
-
 export interface response {
   [result: string]: Result;
 }

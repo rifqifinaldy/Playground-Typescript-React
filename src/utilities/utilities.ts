@@ -2,7 +2,13 @@ import type { Location, Params } from "react-router-dom";
 
 // GLOBAL VARIABEL
 export const API_URL = process.env.REACT_APP_API_URL;
+// Sidebar Width
 export const drawerWidth: number = 240;
+// Tanggal hari ini 
+export const today = new Date();
+
+
+
 
 // GENERATE COLOUR
 export const stringToColor = (string: string) => {
@@ -45,3 +51,11 @@ export const pageName = (path: string): string => {
   }
   return name;
 };
+
+// Format Nominal Uang
+export const currency = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
+

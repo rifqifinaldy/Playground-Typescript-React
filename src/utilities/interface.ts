@@ -17,8 +17,8 @@ export interface FormStatus {
 
 export interface EditForm {
   form: {
-    edit: boolean,
-    data: {},
-  }
+    edit: boolean;
+    data: {};
+  };
   changeFormStatus: (formStatus: FormStatus) => void;
 }

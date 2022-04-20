@@ -3,7 +3,6 @@ import {
   Button,
   Divider,
   Grid,
-  Paper,
   TextField,
   Zoom,
   Stack,
@@ -67,6 +66,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   ];
 
   useEffect(() => {
+    console.log(postRoleResult)
     if (postRoleResult.status === StatusCode.SUCCESS) {
       setAlert({ open: true, color: "success", text: postRoleResult.message });
       setBody(postRoleResult.data as unknown as RoleBody);
@@ -87,7 +87,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   // Cleanup Function
   useEffect(() => {
     return () => {
-      console.log("leaving this component")
+      console.log("leaving ROLE component")
       dispatch(resetRole());
     };
   }, [dispatch]);
@@ -165,7 +165,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
   };
 
   return (
-    <Paper>
+    <>
       <form onSubmit={(e) => (form.edit ? handleEdit(e) : handleSubmit(e))}>
         <Grid px={1} py={1} container spacing={2}>
           <Grid item md={6}>
@@ -271,7 +271,7 @@ const FormRole: FC<EditForm> = ({ form, changeFormStatus }) => {
           </Grid>
         </Grid>
       </form>
-    </Paper>
+    </>
   );
 };
 

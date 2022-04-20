@@ -36,6 +36,7 @@ const ViewEmployee: FC<{
 
   // Redux State
   const { getEmployeeResult } = useSelector((state: State) => state.employee);
+  console.log(getEmployeeResult)
 
   const rerender = useCallback(() => {
     dispatch(getEmployee());
@@ -68,11 +69,11 @@ const ViewEmployee: FC<{
     rerender();
   }, [rerender]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(resetEmployee());
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(resetEmployee());
+  //   };
+  // }, [dispatch]);
 
   const columns = [
     {
@@ -121,7 +122,7 @@ const ViewEmployee: FC<{
   };
 
   return (
-    <Paper style={{ height: 380, width: "100%" }}>
+    <Paper style={{ height: 380, width: "100%" }} variant="outlined">
       <Modal
         modal={modal}
         title="Confirm Delete"

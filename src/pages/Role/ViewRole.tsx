@@ -109,7 +109,7 @@ const ViewRole: FC<{
   };
 
   return (
-    <Paper style={{ height: 300, width: "100%" }}>
+    <Paper style={{ height: 300, width: "100%" }} variant="outlined">
       <Modal
         modal={modal}
         title="Confirm Delete"
